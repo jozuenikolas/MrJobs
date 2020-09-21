@@ -1,7 +1,8 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {UsuarioEntity} from "../usuario/usuario.entity";
+import {EducacionEntity} from "../educacion/educacion.entity";
 
-@Entity('detalleEducacion')
-
+@Entity('detalle_educacion')
 export class DetalleEducacionEntity {
     @PrimaryGeneratedColumn({
         unsigned: true,
@@ -41,5 +42,17 @@ export class DetalleEducacionEntity {
         length: '100',
     })
     disciplina: string;
+
+    @ManyToOne(
+        type => UsuarioEntity,
+        usuario => usuario.detallesEducacion
+    )
+    usuario: UsuarioEntity;
+
+    @ManyToOne(
+        type => EducacionEntity,
+        educacion => educacion.detallesEducacion
+    )
+    educacion: EducacionEntity;
 
 }

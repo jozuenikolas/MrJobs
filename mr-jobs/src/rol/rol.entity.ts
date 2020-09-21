@@ -1,4 +1,6 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {DetalleEducacionEntity} from "../detalleEducacion/detalleEducacion.entity";
+import {UsuarioEntity} from "../usuario/usuario.entity";
 
 @Entity('rol')
 
@@ -36,4 +38,12 @@ export class RolEntity {
         length: '500',
     })
     descripcion: string;
+
+    @OneToMany(
+        type => UsuarioEntity,
+        // Que entidad nos relacionamos
+        usuario => usuario.rol
+        // Campo con el que nos relacionamos
+    )
+    usuarios: UsuarioEntity[];
 }

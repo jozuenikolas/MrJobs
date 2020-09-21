@@ -1,4 +1,7 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {UsuarioEntity} from "../usuario/usuario.entity";
+import {DetalleEducacionEntity} from "../detalleEducacion/detalleEducacion.entity";
+import {EmpleoEntity} from "../empleo/empleo.entity";
 
 @Entity('empresa')
 
@@ -27,4 +30,18 @@ export class EmpresaEntity {
         length: '100',
     })
     tipoIndustria: string;
+
+    @ManyToOne(
+        type => UsuarioEntity,
+        usuario => usuario.empresas
+    )
+    usuario: UsuarioEntity;
+
+    @OneToMany(
+        type => EmpleoEntity,
+        // Que entidad nos relacionamos
+        empleo => empleo.empresa
+        // Campo con el que nos relacionamos
+    )
+    empleos: EmpleoEntity[];
 }

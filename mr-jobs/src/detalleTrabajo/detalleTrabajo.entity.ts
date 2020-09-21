@@ -1,6 +1,8 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {TrabajoEntity} from "../trabajo/trabajo.entity";
+import {UsuarioEntity} from "../usuario/usuario.entity";
 
-@Entity('detalleTrabajo')
+@Entity('detalle_trabajo')
 
 export class DetalleTrabajoEntity {
     @PrimaryGeneratedColumn({
@@ -23,5 +25,17 @@ export class DetalleTrabajoEntity {
         type: "datetime",
     })
     anioFin:string;
+
+    @ManyToOne(
+        type => TrabajoEntity,
+        trabajo => trabajo.detallesTrabajo
+    )
+    trabajo: TrabajoEntity;
+
+    @ManyToOne(
+        type => UsuarioEntity,
+        usuario => usuario.detallesTrabajo
+    )
+    usuario: UsuarioEntity;
 
 }

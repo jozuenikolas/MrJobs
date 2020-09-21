@@ -1,4 +1,9 @@
-import {Column, Entity, Index, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, Index, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {DetalleEducacionEntity} from "../detalleEducacion/detalleEducacion.entity";
+import {DetalleTrabajoEntity} from "../detalleTrabajo/detalleTrabajo.entity";
+import {EmpresaEntity} from "../empresa/empresa.entity";
+import {AplicacionEntity} from "../aplicacion/aplicacion.entity";
+import {RolEntity} from "../rol/rol.entity";
 
 /*@Index([ //INDICES DE BUSQUEDA ---- NOMBRES DE LAS PROPIEDADES DE LA CLASE
     'nombre',
@@ -69,5 +74,44 @@ export class UsuarioEntity {
         length: '100',
     })
     ciudad: string;
+
+    @OneToMany(
+        type => DetalleEducacionEntity,
+        // Que entidad nos relacionamos
+        detalleEducacion => detalleEducacion.usuario
+        // Campo con el que nos relacionamos
+    )
+    detallesEducacion: DetalleEducacionEntity[];
+
+    @OneToMany(
+        type => DetalleTrabajoEntity,
+        // Que entidad nos relacionamos
+        detalleTrabajo => detalleTrabajo.usuario
+        // Campo con el que nos relacionamos
+    )
+    detallesTrabajo: DetalleTrabajoEntity[];
+
+    @OneToMany(
+        type => EmpresaEntity,
+        // Que entidad nos relacionamos
+        empresa => empresa.usuario
+        // Campo con el que nos relacionamos
+    )
+    empresas: EmpresaEntity[];
+
+    @OneToMany(
+        type => AplicacionEntity,
+        // Que entidad nos relacionamos
+        aplicacion => aplicacion.usuario
+        // Campo con el que nos relacionamos
+    )
+    aplicaciones: AplicacionEntity[];
+
+    @ManyToOne(
+        type => RolEntity,
+        rol => rol.usuarios
+    )
+    rol: RolEntity;
+
 
 }

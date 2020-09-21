@@ -1,4 +1,6 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {UsuarioEntity} from "../usuario/usuario.entity";
+import {EmpleoEntity} from "../empleo/empleo.entity";
 
 @Entity('aplicacion')
 
@@ -37,4 +39,15 @@ export class AplicacionEntity {
     })
     estado: string;
 
+    @ManyToOne(
+        type => UsuarioEntity,
+        usuario => usuario.aplicaciones
+    )
+    usuario: UsuarioEntity;
+
+    @ManyToOne(
+        type => EmpleoEntity,
+        empleo => empleo.aplicaciones
+    )
+    empleo: EmpleoEntity;
 }

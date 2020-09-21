@@ -1,4 +1,8 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {UsuarioEntity} from "../usuario/usuario.entity";
+import {EmpresaEntity} from "../empresa/empresa.entity";
+import {DetalleEducacionEntity} from "../detalleEducacion/detalleEducacion.entity";
+import {AplicacionEntity} from "../aplicacion/aplicacion.entity";
 
 @Entity('empleo')
 
@@ -63,5 +67,20 @@ export class EmpleoEntity {
         length: '1',
     })
     estado: string;
+
+    @ManyToOne(
+        type => EmpresaEntity,
+        empresa => empresa.empleos
+    )
+    empresa: EmpresaEntity;
+
+    @OneToMany(
+        type => AplicacionEntity,
+        // Que entidad nos relacionamos
+        aplicacion => aplicacion.empleo
+        // Campo con el que nos relacionamos
+    )
+    aplicaciones: AplicacionEntity[];
+
 
 }
