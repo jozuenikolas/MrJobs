@@ -1,0 +1,31 @@
+<!--SI NO HA INICIADO SESION (ESTA EN EL INICIO)-->
+<table>
+    <th>
+        <a href="/home">
+            <p>Mr Jobs</p>
+        </a>
+    </th>
+
+    <%if(controlador == 'home') {%>
+        <th>
+            <a href="/home/signup">
+                <button>Unirse ahora</button>
+            </a>
+        </th>
+        <th>
+            <a href="/home/login">
+                <button>Iniciar sesión</button>
+            </a>
+        </th>
+    <%}%>
+    <th>
+        <p>Controlador: <%=controlador%></p>
+    </th>
+</table>
+
+
+
+
+
+
+
