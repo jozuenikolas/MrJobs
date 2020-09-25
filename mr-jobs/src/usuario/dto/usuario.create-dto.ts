@@ -13,7 +13,7 @@ export class UsuarioCreateDto{
 
 
     @IsNotEmpty()
-    @MaxLength(100)
+    @MaxLength(12)
     @MinLength(8)
     password: string;
 

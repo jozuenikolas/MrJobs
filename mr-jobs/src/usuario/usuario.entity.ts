@@ -35,7 +35,7 @@ export class UsuarioEntity {
         type: "varchar",
         nullable: false,
         unique: false,
-        length: '100',
+        length: '12',
     })
     password: string;
 
