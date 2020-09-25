@@ -1,0 +1,12 @@
+body > nav > a.navbar-brand{
+    font-weight: bold !important;
+    font-size: 30px !important;
+}
+
+#navbars > ul > li > a > button{
+    font-weight: bold !important;
+}
+
+
+
+

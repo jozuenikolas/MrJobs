@@ -18,9 +18,11 @@ export class UsuarioController{
         //@Query() parametrosConsulta
     ){
         const controlador = "home";
+        const titulo = "Mr Jobs"
         res.render(
             'usuario/inicio',
             {
+                titulo: titulo,
                 controlador: controlador
             });
     }
@@ -32,9 +34,11 @@ export class UsuarioController{
         //@Query() parametrosConsulta
     ){
         const controlador = "login";
+        const titulo = "Iniciar sesión";
         res.render(
             'usuario/login',
             {
+                titulo: titulo,
                 controlador: controlador
             });
     }
@@ -46,9 +50,11 @@ export class UsuarioController{
         //@Query() parametrosConsulta
     ){
         const controlador = "signup";
+        const titulo = "Registrarse";
         res.render(
             'usuario/signup',
             {
+                titulo: titulo,
                 controlador: controlador
             });
     }
