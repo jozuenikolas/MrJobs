@@ -1,6 +1,6 @@
 import {
     IsAlpha,
-    IsAlphanumeric, IsEmail,
+    IsEmail,
     IsNotEmpty, MaxLength, MinLength
 } from "class-validator";
 
@@ -16,6 +16,11 @@ export class UsuarioCreateDto{
     @MaxLength(12)
     @MinLength(8)
     password: string;
+
+    @IsNotEmpty()
+    @MaxLength(12)
+    @MinLength(8)
+    passwordConfirmar: string;
 
 
     @IsAlpha()

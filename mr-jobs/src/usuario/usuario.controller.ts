@@ -1,4 +1,6 @@
-import {Controller, Get, Query, Res} from "@nestjs/common";
+import {Body, Controller, Get, Post, Query, Res} from "@nestjs/common";
+import {UsuarioCreateDto} from "./dto/usuario.create-dto";
+import {validate, ValidationError} from "class-validator";
 
 //http://localhost:3000/home
 @Controller("home")
@@ -58,5 +60,34 @@ export class UsuarioController{
                 controlador: controlador
             });
     }
+
+    //http://localhost:3000/home/signup
+    @Post("signup2")
+    async crearusuarioPaso1(
+        @Res() res,
+        @Body() parametrosCuerpo,
+    ) {
+
+        const usuarioNuevo = new UsuarioCreateDto()
+
+        usuarioNuevo.correo = parametrosCuerpo.correo;
+        usuarioNuevo.password = parametrosCuerpo.password;
+        usuarioNuevo.passwordConfirmar = parametrosCuerpo.passwordConfirmar;
+        usuarioNuevo.nombre = parametrosCuerpo.nombre;
+        usuarioNuevo.apellido = parametrosCuerpo.apellido;
+        usuarioNuevo.pais = parametrosCuerpo.pais;
+        usuarioNuevo.ciudad = parametrosCuerpo.ciudad;
+
+        const errores: ValidationError[] = await validate(usuarioNuevo)
+        if (errores.length > 0) {
+            console.error('Errores: ', errores);
+            res.send("Error validando los datos");
+        } else {
+            console.log("exito")
+        }
+    }
+
+
+
 
 }
