@@ -6,5 +6,9 @@
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/estilos.css">
     </head>
-    <body>
+    <%if(controlador == 'signup' || controlador == 'login') {%>
+        <body id="conImagenFondo">
+    <%}else{%>
+        <body>
+    <%}%>
 

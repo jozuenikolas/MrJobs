@@ -15,7 +15,7 @@
         <%existeCorreo = true%>
         <%nombre = usuario.nombre%>
         <%apellido = usuario.apellido%>
-        <%cedula = usuario.correo%>
+        <%cedula = usuario.cedula%>
         <%}%>
 
         <% if(typeof error !== 'undefined'){%>
@@ -55,7 +55,7 @@
                        value="<%= existeApellido ? apellido : '' %>">
             </div>
             <button type="submit">Registrarse</button>
-            <button type="reset">Limpiar Campos</button>
+            <button type="reset">limpiar</button>
 
         </form>
     </div>

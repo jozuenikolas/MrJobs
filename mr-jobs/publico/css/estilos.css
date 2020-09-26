@@ -7,6 +7,15 @@ body > nav > a.navbar-brand{
     font-weight: bold !important;
 }
 
+body#conImagenFondo {
+    background-image: url(https://image.freepik.com/free-vector/professional-people-work_24908-58137.jpg);
+    background-color: #cccccc;
+    height: 600px;
+    background-position: center;
+    background-size: 100% 100%;
+    position: relative;
+}
+
 
 
 
