@@ -62,7 +62,7 @@ export class UsuarioController{
     }
 
     //http://localhost:3000/home/signup
-    @Post("signup2")
+    @Post("signup")
     async crearusuarioPaso1(
         @Res() res,
         @Body() parametrosCuerpo,
@@ -79,12 +79,36 @@ export class UsuarioController{
         usuarioNuevo.ciudad = parametrosCuerpo.ciudad;
 
         const errores: ValidationError[] = await validate(usuarioNuevo)
-        if (errores.length > 0) {
-            console.error('Errores: ', errores);
-            res.send("Error validando los datos");
-        } else {
-            console.log("exito")
+        if(usuarioNuevo.password != usuarioNuevo.passwordConfirmar){
+            console.log("diferentes")
+            const mensajeError = 'Las contraseñas no son iguales'
+            const controlador = "signup";
+            const titulo = "Registrarse";
+            return res.render('usuario/signup',{
+                titulo: titulo,
+                controlador: controlador,
+                error: mensajeError,
+            })
+        }else{
+            console.log("iguales")
+            if (errores.length > 0) {
+                console.error('Errores: ', errores);
+
+                const mensajeError = 'No se pudo crear el usuario, ingrese la información correcta'
+
+                const controlador = "signup";
+                const titulo = "Registrarse";
+                return res.render('usuario/signup',{
+                    titulo: titulo,
+                    controlador: controlador,
+                    error: mensajeError,
+                })
+            } else {
+                console.log("exito")
+            }
         }
+
+
     }
 
 
