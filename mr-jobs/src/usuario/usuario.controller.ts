@@ -80,7 +80,7 @@ export class UsuarioController{
 
         const errores: ValidationError[] = await validate(usuarioNuevo)
         if(usuarioNuevo.password != usuarioNuevo.passwordConfirmar){
-            console.log("diferentes")
+            //console.log("diferentes")
             const mensajeError = 'Las contraseñas no son iguales'
             const controlador = "signup";
             const titulo = "Registrarse";
@@ -90,21 +90,28 @@ export class UsuarioController{
                 error: mensajeError,
             })
         }else{
-            console.log("iguales")
+            //console.log("iguales")
             if (errores.length > 0) {
                 console.error('Errores: ', errores);
 
                 const mensajeError = 'No se pudo crear el usuario, ingrese la información correcta'
-
                 const controlador = "signup";
                 const titulo = "Registrarse";
+
                 return res.render('usuario/signup',{
                     titulo: titulo,
                     controlador: controlador,
                     error: mensajeError,
                 })
             } else {
-                console.log("exito")
+                //console.log("exito")
+                const controlador = "signup";
+                const titulo = "Registrarse";
+                return res.render('usuario/signupParte2',{
+                    titulo: titulo,
+                    controlador: controlador,
+                    usuario: usuarioNuevo,
+                })
             }
         }
 

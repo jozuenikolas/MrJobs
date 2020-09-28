@@ -17,6 +17,7 @@ export class TrabajoEntity {
         length: '100',
     })
     nombre: string;
+    //nombre = cargo
 
     @Column({
         name: 'tipo',
@@ -44,6 +45,7 @@ export class TrabajoEntity {
         length: '100',
     })
     organizacion: string;
+    //organizacion = empresa
 
     @OneToMany(
         type => DetalleTrabajoEntity,

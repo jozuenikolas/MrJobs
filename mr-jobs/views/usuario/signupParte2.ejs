@@ -3,13 +3,12 @@
 
 <% let existeNombre = typeof nombre !== 'undefined' %>
 <% let existeApellido = typeof apellido !== 'undefined' %>
-<% let existeUsuario = typeof(usuario) != 'undefined'%>
-<% let existeCorreo = typeof correo !== 'undefined' %>
+<% let existeTrabajo = typeof(trabajo) != 'undefined'%>
 
 <div class="container">
     <div class="container">
-        <h1><%= existeUsuario ? 'Editar': 'Unirse'%></h1>
-        <%if(existeUsuario){%>
+        <h1><%= existeTrabajo ? 'Editar': 'Seleccionar'%> empleo</h1>
+        <%if(!existeTrabajo){%>
         <%existeNombre = true%>
         <%existeApellido = true%>
         <%existeCorreo = true%>
@@ -21,42 +20,47 @@
         <% if(typeof error !== 'undefined'){%>
             <p>Mensaje Error: <%= error%></p>
         <%}%>
-        <form action="<%= existeUsuario ? '/usuario/editarDesdeVista/'+usuario.id : '/usuario/crearDesdeVista'%>"
+        <form action="<%= existeTrabajo ? '/usuario/editarDesdeVista/'+usuario.id : '/usuario/crearDesdeVista'%>"
               method="POST">
             <div class="form-group">
-                <label for="correoID">Correo electrónico</label>
-                <input id="correoID" type="email"
-                       name="correo" class="form-control"
-                       placeholder="Enter email"
-                       value="<%= existeCorreo ? correo : '' %>">
+                <label for="empresaID">Empresa</label>
+                <input id="empresaID" type="text" name="empresa"
+                       class="form-control" placeholder="Empresa mas reciente">
             </div>
             <div class="form-group">
-                <label for="passwordID">Contraseña</label>
-                <input id="passwordID" type="password" name="password"
-                       class="form-control" placeholder="Contraseña"
-                       value="<%= existeApellido ? apellido : '' %>">
+                <label for="cargoID">Cargo mas reciente</label>
+                <input id="cargoID" type="text"
+                       name="cargo" class="form-control"
+                       placeholder="Cargo mas reciente">
             </div>
             <div class="form-group">
-                <label for="passwordConfirmarID">Confirmar</label>
-                <input id="passwordConfirmarID" type="password" name="passwordConfirmar"
-                       class="form-control" placeholder="Confirmar contraseña"
-                       value="<%= existeApellido ? apellido : '' %>">
+                <label for="tipoEmpleoID">Tipo de empleo</label>
+                <select class="form-control" id="tipoEmpleoID" name="tipoEmpleo">
+                    <option>Tipo de empleo</option>
+                    <option value="jornadaCompleta">Jornada completa</option>
+                    <option value="jornadaParcial">Jornada parcial</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="nombreID">Nombre</label>
-                <input id="nombreID" type="text" name="nombre"
-                       class="form-control" placeholder="Nombre"
-                       value="<%= existeApellido ? apellido : '' %>">
+                <label for="ubicacionID">Ubicacion</label>
+                <textarea class="form-control" id="ubicacionID" rows="3"
+                name = "ubicacion" placeholder="Ubicacion del trabajo"></textarea>
             </div>
             <div class="form-group">
-                <label for="apellidoID">Apellido</label>
-                <input id="apellidoID" type="text" name="apellido"
-                       class="form-control" placeholder="apellido"
-                       value="<%= existeApellido ? apellido : '' %>">
+                <label for="fechaInicioID">Fecha de inicio</label>
+                <input id="fechaInicioID" type="date"
+                       name="fechaInicio" class="form-control"
+                       placeholder="Fecha de inicio del trabajo">
             </div>
-            <button type="submit">Registrarse</button>
-            <button type="reset">limpiar</button>
+            <div class="form-group">
+                <label for="fechaFinID">Fecha de fin (fecha actual en caso de seguir trabajando)</label>
+                <input id="fechaFinID" type="date"
+                       name="fechaFin" class="form-control"
+                       placeholder="Fecha de fin del trabajo">
+            </div>
 
+            <button type="submit" class="btn btn-primary">Registrarse</button>
+            <button type="reset" class="btn btn-primary">limpiar</button>
         </form>
     </div>
 </div>
