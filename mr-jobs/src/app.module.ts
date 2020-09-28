@@ -38,7 +38,7 @@ import {DetalleTrabajoEntity} from "./detalleTrabajo/detalleTrabajo.entity";
           host: 'localhost',
           port: 3306,
           username: 'root',
-          password: '829SK',
+          password: 'root',
           database: 'mrjobs',
           entities: [
               UsuarioEntity,

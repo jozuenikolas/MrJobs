@@ -5,9 +5,12 @@
         <title><%=titulo%> | MrJob</title>
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <link rel="stylesheet" href="/css/estilos.css">
+        <link rel="icon" href="/resources/icons/iconoMrJobs.png">
     </head>
     <%if(controlador == 'signup' || controlador == 'login') {%>
-        <body id="conImagenFondo">
+        <body id="fondoLoginSignup">
+    <%}else if(controlador == 'home'){%>
+        <body class="fondoHome">
     <%}else{%>
         <body>
     <%}%>
