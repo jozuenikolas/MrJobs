@@ -42,3 +42,46 @@ h1.formularioTitulo{
 .btn-home-buscar-empleo{
     border-radius: 50px 50px 50px 50px;
 }
+
+.border-2{
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 0%;
+    background-color: white;
+}
+
+.jumbotron-titulo{
+    font-weight: normal ;
+    font-size: 40px ;
+    text-align: center;
+}
+
+
+.a-no-underline{
+    text-decoration: none;
+    color: black;
+}
+.a-no-underline:hover{
+    text-decoration: none;
+    color: #17a2b8;
+}
+
+.border-1{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    border-radius: 0%;
+}
+
+.hr-card-empleo{
+    width: 25%;
+    background-color: black;
+    margin-left: 0px;
+}
+
+.card-text-title{
+    font-weight: bold !important;
+    font-size: 120%;
+
+}
+

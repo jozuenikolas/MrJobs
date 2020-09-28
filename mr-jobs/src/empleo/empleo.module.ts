@@ -1,6 +1,7 @@
 import {Module} from "@nestjs/common";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {EmpleoEntity} from "./empleo.entity";
+import {EmpleoController} from "./empleo.controller";
 
 @Module({
     imports: [
@@ -10,7 +11,7 @@ import {EmpleoEntity} from "./empleo.entity";
         )
     ],
     controllers: [
-
+        EmpleoController
     ],
     providers: [
 
