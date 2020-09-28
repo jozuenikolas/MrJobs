@@ -1,6 +1,7 @@
 import {Body, Controller, Get, Post, Query, Res} from "@nestjs/common";
 import {UsuarioCreateDto} from "./dto/usuario.create-dto";
 import {validate, ValidationError} from "class-validator";
+import {TrabajoCreateDto} from "../trabajo/dto/trabajo.create-dto";
 
 //http://localhost:3000/home
 @Controller("home")
@@ -63,13 +64,11 @@ export class UsuarioController{
 
     //http://localhost:3000/home/signup
     @Post("signup")
-    async crearusuarioPaso1(
+    async crearUsuarioPaso1(
         @Res() res,
         @Body() parametrosCuerpo,
-    ) {
-
+    ){
         const usuarioNuevo = new UsuarioCreateDto()
-
         usuarioNuevo.correo = parametrosCuerpo.correo;
         usuarioNuevo.password = parametrosCuerpo.password;
         usuarioNuevo.passwordConfirmar = parametrosCuerpo.passwordConfirmar;
@@ -114,11 +113,29 @@ export class UsuarioController{
                 })
             }
         }
+    }
+    @Post("crearDesdeVista")
+    async crearUsuario(
+        @Res() res,
+        @Body() parametrosCuerpo,
+    ) {
+        const trabajoNuevo = new TrabajoCreateDto()
+        trabajoNuevo.nombreTrabajo = parametrosCuerpo.cargo;
+        trabajoNuevo.organizacion = parametrosCuerpo.empresa;
+        trabajoNuevo.tipo = parametrosCuerpo.tipoEmpleo;
+        trabajoNuevo.ubicacion = parametrosCuerpo.ubicacion;
+        try {
+            const errores: ValidationError[] = await validate(trabajoNuevo)
+            if (errores.length > 0) {
+
+            }else{
+
+            }
+
+        }catch (e) {
+            
+        }
 
 
     }
-
-
-
-
 }
