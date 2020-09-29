@@ -6,11 +6,15 @@ import {
 
 export class UsuarioCreateDto{
 
+    @IsAlpha()
+    @IsNotEmpty()
+    @MaxLength(100)
+    nombreUsuario: string;
+
     @IsNotEmpty()
     @IsEmail()
     @MaxLength(100)
     correo: string;
-
 
     @IsNotEmpty()
     @MaxLength(12)

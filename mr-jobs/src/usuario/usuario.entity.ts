@@ -22,6 +22,15 @@ export class UsuarioEntity {
     id: number
 
     @Column({
+        name: 'nombreUsuario',
+        type: "varchar",
+        nullable: false,
+        unique: true,
+        length: '100',
+    })
+    nombreUsuario: string;
+
+    @Column({
         name: 'correo',
         type: "varchar",
         nullable: false,

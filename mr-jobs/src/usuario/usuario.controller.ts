@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Query, Res} from "@nestjs/common";
+import {Body, Controller, Get, Param, Post, Query, Req, Res, Session} from "@nestjs/common";
 import {UsuarioCreateDto} from "./dto/usuario.create-dto";
 import {validate, ValidationError} from "class-validator";
 import {TrabajoCreateDto} from "../trabajo/dto/trabajo.create-dto";
@@ -69,6 +69,7 @@ export class UsuarioController{
         @Body() parametrosCuerpo,
     ){
         const usuarioNuevo = new UsuarioCreateDto()
+        usuarioNuevo.nombreUsuario = parametrosCuerpo.nombreUsuario;
         usuarioNuevo.correo = parametrosCuerpo.correo;
         usuarioNuevo.password = parametrosCuerpo.password;
         usuarioNuevo.passwordConfirmar = parametrosCuerpo.passwordConfirmar;
@@ -118,13 +119,14 @@ export class UsuarioController{
     async crearUsuario(
         @Res() res,
         @Body() parametrosCuerpo,
+        @Session() session,
     ) {
         const trabajoNuevo = new TrabajoCreateDto()
         trabajoNuevo.nombreTrabajo = parametrosCuerpo.cargo;
         trabajoNuevo.organizacion = parametrosCuerpo.empresa;
         trabajoNuevo.tipo = parametrosCuerpo.tipoEmpleo;
         trabajoNuevo.ubicacion = parametrosCuerpo.ubicacion;
-        const nombreUsuario = parametrosCuerpo.nombre;
+        const nombreUsuario = parametrosCuerpo.nombreUsuario;
         try {
             const errores: ValidationError[] = await validate(trabajoNuevo)
             if (errores.length > 0) {
@@ -142,12 +144,50 @@ export class UsuarioController{
                 console.log("exito");
                 console.log(trabajoNuevo)
                 console.log(nombreUsuario)
+                console.log(parametrosCuerpo)
+                session.currentUser = nombreUsuario;
+                console.log(session)
+                return res.redirect(`/home/profile/${nombreUsuario}`)
             }
 
         }catch (e) {
             
         }
-
-
     }
+
+    //http://localhost:3000/profile/:nombreUsuario
+    @Get("/profile/:nombreUsuario")
+    async profile(
+        @Res() res,
+        @Param() parametrosRuta,
+        @Session() session,
+    ){
+        const estaLogueado = session.currentUser;
+        if(estaLogueado){
+            const controlador = "profile";
+            const titulo = "Profile"
+            res.render(
+                'usuario/profile',
+                {
+                    titulo: titulo,
+                    controlador: controlador
+                });
+        }else {
+            return res.redirect("/home/login")
+        }
+    }
+
+
+
+    @Get('logout')
+    logout(
+        @Session() session,
+        @Res() res,
+        @Req() req
+    ){
+        session.currentUser = undefined;
+        //session.destroy();
+        return res.redirect('/home/login')
+    }
+
 }
