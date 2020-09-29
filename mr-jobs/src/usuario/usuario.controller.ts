@@ -127,6 +127,19 @@ export class UsuarioController{
         trabajoNuevo.organizacion = parametrosCuerpo.empresa;
         trabajoNuevo.tipo = parametrosCuerpo.tipoEmpleo;
         trabajoNuevo.ubicacion = parametrosCuerpo.ubicacion;
+
+        const usuarioNuevo = new UsuarioCreateDto()
+        usuarioNuevo.correo = parametrosCuerpo.correo;
+        usuarioNuevo.password = parametrosCuerpo.password;
+        usuarioNuevo.nombre = parametrosCuerpo.nombre;
+        usuarioNuevo.apellido = parametrosCuerpo.apellido;
+        usuarioNuevo.pais = parametrosCuerpo.pais;
+        usuarioNuevo.ciudad = parametrosCuerpo.ciudad;
+
+        const detalleTrabajo = new DetalleTrabajoCreateDto();
+        detalleTrabajo.anioFin = parametrosCuerpo.fechaFin;
+        detalleTrabajo.anioInicio = parametrosCuerpo.fechaFin;
+        console.log(detalleTrabajo)
         const username = parametrosCuerpo.username;
         try {
             const errores: ValidationError[] = await validate(trabajoNuevo)
@@ -149,6 +162,8 @@ export class UsuarioController{
                 console.log(parametrosCuerpo)
                 session.currentUser = username;
                 console.log(session)
+                console.log(usuarioNuevo)
+                console.log(detalleTrabajo)
                 return res.redirect(`/home/profile/${username}`)
             }
 
