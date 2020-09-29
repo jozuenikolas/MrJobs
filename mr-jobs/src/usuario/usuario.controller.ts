@@ -162,8 +162,10 @@ export class UsuarioController{
                 console.log(parametrosCuerpo)
                 session.currentUser = username;
                 console.log(session)
+
                 console.log(usuarioNuevo)
                 console.log(detalleTrabajo)
+
                 return res.redirect(`/home/profile/${username}`)
             }
 

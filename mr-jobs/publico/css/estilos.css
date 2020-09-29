@@ -91,7 +91,6 @@ h1.formularioTitulo{
 
 .card-title-color{
     background-color: #8B97FF;
-
 }
 
 .radius-card-head{
@@ -100,4 +99,11 @@ h1.formularioTitulo{
 .radius-card-body{
     border-top-right-radius: 50px !important;
     border-top-left-radius: 50px !important;
+}
+
+.error-message{
+    color: red;
+}
+.campo-obligatorio{
+    color:#17a2b8;
 }

@@ -11,25 +11,90 @@
     </div>
 </div>
 
-<div class="container">
+
+
+<div class="container mb-5">
     <div class="row">
-        <div class="col-3"></div>
-        <div class="col-6">
+        <div class="col-1"></div>
+        <div class="col-10">
             <div class="card border-top-0 b border-left-0 border-right-0 radius-card-head">
                 <div class="card-header rounded-top card-title-color text-center radius-card-body">
-                    <h4><strong>Publicar</strong></h4>
+                    <h4><strong>Publicar empleo</strong></h4>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                <div class="card-body px-5 py-4">
+                    <form>
+<!--                        PRIMERA FILA-->
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="nombreEmpresaID">Empresa <span class="campo-obligatorio">*</span></label>
+                                <select id="nombreEmpresaID" class="form-control custom-select" required>
+                                    <option selected>Bonice</option>
+                                    <option>Movistar</option>
+                                    <option>Nestle</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="nombreEmpleoID">Cargo <span class="campo-obligatorio">*</span></label>
+                                <input type="text" class="form-control" id="nombreEmpleoID" name="nombreEmpleo" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="ubicacionEmpledoID">Ubicación <span class="campo-obligatorio">*</span></label>
+                                <input type="text" class="form-control" id="ubicacionEmpledoID" name="ubicacionEmpleo" required>
+                            </div>
+                        </div>
+<!--                        SEGUNDA FILA-->
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="funcionLaboralID">Función laboral <span class="campo-obligatorio">*</span></label>
+                                <input type="text" class="form-control" id="funcionLaboralID" name="funcionLaboral" required>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="tipoEmpleoID">Tipo de empleo <span class="campo-obligatorio">*</span></label>
+                                <select id="tipoEmpleoID" class="form-control custom-select" required>
+                                    <option selected>Jornada completa</option>
+                                    <option>Media jornada</option>
+                                    <option>Temporal</option>
+                                </select>
+                            </div>
+                            <div class="form-group col-md-4">
+                                <label for="nivelAntiguedadID">Nivel de antigüedad <span class="campo-obligatorio">*</span></label>
+                                <select id="nivelAntiguedadID" class="form-control custom-select" required>
+                                    <option selected>Prácticas</option>
+                                    <option>Sin experiencia</option>
+                                    <option>Itermedio</option>
+                                </select>
+                            </div>
+                        </div>
+
+<!--                        TERCERA FILA-->
+                        <div class="form-group">
+                            <label for="descripcionEmpleoID">Descripción del empleo <span class="campo-obligatorio">*</span></label>
+                            <textarea class="form-control" id="descripcionEmpleoID" rows="5" required></textarea>
+                        </div>
+
+                        <!--SI ES QUE EXISTE ERROR MOSTRAR ESO-->
+                        <div class="alert alert-danger text-center" role="alert">
+                            Aquí va el mensaje de error de validación
+                        </div>
+
+<!--                        BOTON-->
+                        <div class="text-center">
+                            <div class="row pt-2">
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    <button type="submit"
+                                            class="btn btn-primary btn-home-buscar-empleo btn-block ">Enviar</button>
+                                </div>
+                                <div class="col-4"></div>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
             </div>
         </div>
-        <div class="col-3"></div>
     </div>
 </div>
-
 
 
 <%- include('../compartido/footer/footer-component')%>
