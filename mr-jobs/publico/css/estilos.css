@@ -88,3 +88,16 @@ h1.formularioTitulo{
 .border-1-navbar{
     border-radius: 0%;
 }
+
+.card-title-color{
+    background-color: #8B97FF;
+
+}
+
+.radius-card-head{
+    border-radius: 50px;
+}
+.radius-card-body{
+    border-top-right-radius: 50px !important;
+    border-top-left-radius: 50px !important;
+}

@@ -9,7 +9,7 @@ export class UsuarioCreateDto{
     @IsAlpha()
     @IsNotEmpty()
     @MaxLength(100)
-    nombreUsuario: string;
+    username: string;
 
     @IsNotEmpty()
     @IsEmail()

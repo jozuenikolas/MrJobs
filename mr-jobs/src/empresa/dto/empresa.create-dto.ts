@@ -1,6 +1,6 @@
 import {
     IsAlphanumeric,
-    IsNotEmpty, IsNumber, IsPositive, Max, MaxLength
+    IsNotEmpty, IsNumber, IsPositive, MaxLength
 } from "class-validator";
 
 export class  EmpresaCreateDto {
@@ -8,11 +8,16 @@ export class  EmpresaCreateDto {
     @IsNotEmpty()
     @IsAlphanumeric()
     @MaxLength(100)
-    nombre: string;
+    nombreEmpresa: string;
 
     @IsNotEmpty()
     @IsAlphanumeric()
     @MaxLength(100)
-    tipoIndustria: string;
+    sectorEmpresa: string;
+
+    @IsNotEmpty()
+    @IsNumber()
+    @IsPositive()
+    numEmpleados:number;
 
 }

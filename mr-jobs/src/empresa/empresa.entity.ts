@@ -14,22 +14,30 @@ export class EmpresaEntity {
     id: number
 
     @Column({
-        name: 'nombre',
+        name: 'nombreEmpresa',
         type: "varchar",
         nullable: false,
         unique: true,
         length: '100',
     })
-    nombre: string;
+    nombreEmpresa: string;
 
     @Column({
-        name: 'tipoIndustria',
+        name: 'sectorEmpresa',
         type: "varchar",
         nullable: false,
         unique: false,
         length: '100',
     })
-    tipoIndustria: string;
+    sectorEmpresa: string;
+
+    @Column({
+        name: 'numEmpleados',
+        type: "int",
+        nullable: false,
+        unique: false,
+    })
+    numEmpleados:number;
 
     @ManyToOne(
         type => UsuarioEntity,

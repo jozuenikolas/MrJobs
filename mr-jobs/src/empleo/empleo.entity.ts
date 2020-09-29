@@ -15,58 +15,68 @@ export class EmpleoEntity {
     id: number
 
     @Column({
-        name: 'nombre',
+        name: 'nombreEmpleo',
         type: "varchar",
         nullable: false,
         unique: false,
         length: '100',
     })
-    nombre: string;
+    nombreEmpleo: string;
 
     @Column({
-        name: 'ubicacion',
+        name: 'descripcionEmpleo',
+        type: "varchar",
+        nullable: false,
+        unique: false,
+        length: '500',
+    })
+    descripcionEmpleo: string;
+
+    @Column({
+        name: 'ubicacionEmpleo',
         type: "varchar",
         nullable: false,
         unique: false,
         length: '100',
     })
-    ubicacion: string;
+    ubicacionEmpleo: string;
+
 
     @Column({
-        name: 'rangoInicial',
-        nullable: false,
-        type: "decimal",
-        //precision: 10, // 1000000000.
-        //scale: 4, //.0001
-    })
-    rangoInicial:number;
-
-    @Column({
-        name: 'rangoFinal',
-        nullable: false,
-        type: "decimal",
-        //precision: 10, // 1000000000.
-        //scale: 4, //.0001
-    })
-    rangoFinal:number;
-
-    @Column({
-        name: 'tipo',
+        name: 'tipoEmpleo',
         type: "varchar",
         nullable: false,
         unique: false,
         length: '100',
     })
-    tipo: string;
+    tipoEmpleo: string;
 
     @Column({
-        name: 'estado',
+        name: 'funcionLaboral',
+        type: "varchar",
+        nullable: false,
+        unique: false,
+        length: '100',
+    })
+    funcionLaboral: string;
+
+    @Column({
+        name: 'nivelAntiguedad',
+        type: "varchar",
+        nullable: false,
+        unique: false,
+        length: '100',
+    })
+    nivelAntiguedad: string;
+
+    @Column({
+        name: 'estadoEmpleo',
         type: "varchar",
         nullable: false,
         unique: false,
         length: '1',
     })
-    estado: string;
+    estadoEmpleo: string;
 
     @ManyToOne(
         type => EmpresaEntity,

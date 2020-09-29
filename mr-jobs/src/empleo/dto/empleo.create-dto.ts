@@ -1,38 +1,43 @@
 import {
     IsAlpha,
     IsAlphanumeric,
-    IsNotEmpty, IsNumber, IsPositive, Max, MaxLength
+    IsNotEmpty, IsNumber, IsPositive, IsString, Max, MaxLength
 } from "class-validator";
 export class EmpleoCreateDto {
 
     @IsNotEmpty()
-    @IsAlphanumeric()
+    @IsString()
     @MaxLength(100)
     nombreEmpleo: string;
 
     @IsNotEmpty()
-    @IsAlphanumeric()
+    @IsString()
+    @MaxLength(500)
+    descripcionEmpleo: string;
+
+    @IsNotEmpty()
+    @IsString()
     @MaxLength(100)
-    ubicacion: string;
+    ubicacionEmpleo: string;
 
     @IsNotEmpty()
-    @IsNumber()
-    @IsPositive()
-    rangoInicial:number;
-
-    @IsNotEmpty()
-    @IsNumber()
-    @IsPositive()
-    rangoFinal:number;
-
-    @IsNotEmpty()
-    @IsAlphanumeric()
+    @IsString()
     @Max(100)
-    tipo: string;
+    tipoEmpleo: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @Max(100)
+    funcionLaboral: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @Max(100)
+    nivelAntiguedad: string;
 
     @IsNotEmpty()
     @IsAlpha()
     @MaxLength(1)
-    estado: string;
+    estadoEmpleo: string;
 
 }

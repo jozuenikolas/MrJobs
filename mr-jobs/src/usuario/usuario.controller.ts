@@ -69,7 +69,7 @@ export class UsuarioController{
         @Body() parametrosCuerpo,
     ){
         const usuarioNuevo = new UsuarioCreateDto()
-        usuarioNuevo.nombreUsuario = parametrosCuerpo.nombreUsuario;
+        usuarioNuevo.username = parametrosCuerpo.username;
         usuarioNuevo.correo = parametrosCuerpo.correo;
         usuarioNuevo.password = parametrosCuerpo.password;
         usuarioNuevo.passwordConfirmar = parametrosCuerpo.passwordConfirmar;
@@ -126,7 +126,7 @@ export class UsuarioController{
         trabajoNuevo.organizacion = parametrosCuerpo.empresa;
         trabajoNuevo.tipo = parametrosCuerpo.tipoEmpleo;
         trabajoNuevo.ubicacion = parametrosCuerpo.ubicacion;
-        const nombreUsuario = parametrosCuerpo.nombreUsuario;
+        const username = parametrosCuerpo.username;
         try {
             const errores: ValidationError[] = await validate(trabajoNuevo)
             if (errores.length > 0) {
@@ -143,11 +143,11 @@ export class UsuarioController{
             }else{
                 console.log("exito");
                 console.log(trabajoNuevo)
-                console.log(nombreUsuario)
+                console.log(username)
                 console.log(parametrosCuerpo)
-                session.currentUser = nombreUsuario;
+                session.currentUser = username;
                 console.log(session)
-                return res.redirect(`/home/profile/${nombreUsuario}`)
+                return res.redirect(`/home/profile/${username}`)
             }
 
         }catch (e) {
@@ -155,8 +155,8 @@ export class UsuarioController{
         }
     }
 
-    //http://localhost:3000/profile/:nombreUsuario
-    @Get("/profile/:nombreUsuario")
+    //http://localhost:3000/profile/:username
+    @Get("/profile/:username")
     async profile(
         @Res() res,
         @Param() parametrosRuta,
@@ -172,7 +172,7 @@ export class UsuarioController{
                     titulo: titulo,
                     controlador: controlador,
                     currentUser: session.currentUser,
-                    currentProfile: parametrosRuta.nombreUsuario
+                    currentProfile: parametrosRuta.username
                 });
         }else {
             return res.redirect("/home/login")

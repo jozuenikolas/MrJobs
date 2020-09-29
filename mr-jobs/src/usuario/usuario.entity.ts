@@ -22,13 +22,13 @@ export class UsuarioEntity {
     id: number
 
     @Column({
-        name: 'nombreUsuario',
+        name: 'username',
         type: "varchar",
         nullable: false,
         unique: true,
         length: '100',
     })
-    nombreUsuario: string;
+    username: string;
 
     @Column({
         name: 'correo',
