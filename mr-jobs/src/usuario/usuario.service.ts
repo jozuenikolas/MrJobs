@@ -1,7 +1,7 @@
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {UsuarioEntity} from "./usuario.entity";
-import {Repository} from "typeorm";
+import {FindManyOptions, Repository} from "typeorm";
 
 @Injectable()
 export class UsuarioService{
@@ -13,4 +13,20 @@ export class UsuarioService{
     crearUno(nuevoUsuario: UsuarioEntity){
         return this.repositorio.save(nuevoUsuario) //promesa
     }
+
+    obtenerIdPorusername(username:string){
+        const consulta : FindManyOptions<UsuarioEntity> = {
+            select:[
+                "id"
+            ],
+            where: [
+                {
+                    username: username
+                }
+            ]
+        }
+
+        return this.repositorio.find(consulta)
+    }
+
 }

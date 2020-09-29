@@ -78,6 +78,14 @@ export class EmpleoEntity {
     })
     estadoEmpleo: string;
 
+    @Column({
+        name:'fechaPublicacion',
+        nullable: false,
+        unique: false,
+        type: "date",
+    })
+    fechaPublicacion:string;
+
     @ManyToOne(
         type => EmpresaEntity,
         empresa => empresa.empleos
