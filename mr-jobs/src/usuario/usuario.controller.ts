@@ -18,6 +18,8 @@ import {DetalleTrabajoCreateDto} from "../detalleTrabajo/dto/detalleTrabajo.crea
 import {UsuarioEntity} from "./usuario.entity";
 import {TrabajoService} from "../trabajo/trabajo.service";
 import {TrabajoEntity} from "../trabajo/trabajo.entity";
+import {DetalleTrabajoService} from "../detalleTrabajo/detalleTrabajo.service";
+import {DetalleTrabajoEntity} from "../detalleTrabajo/detalleTrabajo.entity";
 
 //http://localhost:3000/home
 @Controller("home")
@@ -25,6 +27,7 @@ export class UsuarioController{
     constructor(
         private readonly _usuarioService: UsuarioService,
         private readonly _trabajoService: TrabajoService,
+        private readonly _detalleTrabajoService: DetalleTrabajoService,
     ) {
     }
 
@@ -160,58 +163,74 @@ export class UsuarioController{
         detalleTrabajo.anioFin = parametrosCuerpo.fechaFin;
         detalleTrabajo.anioInicio = parametrosCuerpo.fechaFin;
 
-        try {
-            const errores: ValidationError[] = await validate(trabajoNuevo)
-            if (errores.length > 0) {
-                console.log(errores)
-                const mensajeError = 'No se pudo guardar la información de empleo, ingrese la información correcta'
-                const controlador = "signup2";
-                const titulo = "Registrarse";
 
-                return res.render('usuario/signupParte2',{
-                    titulo: titulo,
-                    controlador: controlador,
-                    error: mensajeError,
-                    usuario: usuarioNuevo,
-                })
-            }else{
-                console.log("exito");
-                console.log(trabajoNuevo)
-                session.currentUser = usuarioNuevo.username;
-                console.log(session)
-                console.log(usuarioNuevo)
-                console.log(detalleTrabajo)
-                let usuarioGrabar = new UsuarioEntity()
-                usuarioGrabar= userDTOtoEntity(usuarioNuevo,usuarioGrabar)
+        const errores: ValidationError[] = await validate(trabajoNuevo)
+        if (errores.length > 0) {
+            console.log(errores)
+            const mensajeError = 'No se pudo guardar la información de empleo, ingrese la información correcta'
+            const controlador = "signup2";
+            const titulo = "Registrarse";
 
-                let respuestaCreacionUsuario;
+            return res.render('usuario/signupParte2',{
+                titulo: titulo,
+                controlador: controlador,
+                error: mensajeError,
+                usuario: usuarioNuevo,
+            })
+        }else{
+            console.log("exito");
+            console.log(trabajoNuevo)
+            session.currentUser = usuarioNuevo.username;
+            console.log(session)
+            console.log(usuarioNuevo)
+            console.log(detalleTrabajo)
+            let usuarioGrabar = new UsuarioEntity()
+            usuarioGrabar= userDTOtoEntity(usuarioNuevo,usuarioGrabar)
+
+            let respuestaCreacionUsuario;
+            try {
+                respuestaCreacionUsuario = await this._usuarioService.crearUno(usuarioGrabar);
+                console.log("usuairo creado")
+            } catch (e) {
+                console.log(e)
+                throw  new InternalServerErrorException("Error creando el usuario")
+            }
+            if (respuestaCreacionUsuario) {
+                let trabajoGrabar = new  TrabajoEntity()
+                trabajoGrabar = trabajoDTOtoEntity(trabajoNuevo,trabajoGrabar)
+                let respuestaCreacionTrabajo;
                 try {
-                    respuestaCreacionUsuario = await this._usuarioService.crearUno(usuarioGrabar);
-                    console.log("usuairo creado")
+                    respuestaCreacionTrabajo = await this._trabajoService.crearUno(trabajoGrabar)
+                    console.log("trabajo creado")
                 } catch (e) {
                     console.log(e)
-                    throw  new InternalServerErrorException("Error creando el usuario")
+                    throw  new InternalServerErrorException("Error creando el empleo")
                 }
-                if (respuestaCreacionUsuario) {
-                    let trabajoGrabar = new  TrabajoEntity()
-                    trabajoGrabar = trabajoDTOtoEntity(trabajoNuevo,trabajoGrabar)
-                    let respuestaCreacionTrabajo;
-                    try {
-                        respuestaCreacionTrabajo = await this._trabajoService.crearUno(trabajoGrabar)
-                        console.log("trabajo creado")
-                    } catch (e) {
-                        console.log(e)
-                        throw  new InternalServerErrorException("Error creando el empleo")
-                    }
-                    if (respuestaCreacionTrabajo) {
+                if (respuestaCreacionTrabajo) {
+                    let detalleTrabajoGrabar = new DetalleTrabajoEntity()
+                    detalleTrabajoGrabar.trabajo=respuestaCreacionTrabajo.id;
+                    detalleTrabajoGrabar.usuario= respuestaCreacionUsuario.id;
+                    detalleTrabajoGrabar.anioInicio = detalleTrabajo.anioInicio;
+                    detalleTrabajoGrabar.anioFin = detalleTrabajo.anioFin;
 
+                    let respuestaCreacionDetalleTrabajo;
+                    try {
+                        respuestaCreacionDetalleTrabajo = await this._detalleTrabajoService.crearUno(detalleTrabajoGrabar)
+                    } catch (e) {
+                        console.error(e);
+                        throw  new InternalServerErrorException({
+                            mensaje: 'Error creando Empleo(fechas)'
+                        })
+                    }
+                    if(respuestaCreacionDetalleTrabajo){
                         return res.redirect(`/home/profile/${usuarioNuevo.username}`)
+                    }else{
+                        throw  new InternalServerErrorException({
+                            mensaje: 'Error creando el empleo y usuario'
+                        })
                     }
                 }
             }
-
-        }catch (e) {
-            
         }
 
     }
@@ -249,7 +268,7 @@ export class UsuarioController{
     ){
         session.currentUser = undefined;
         //session.destroy();
-        return res.redirect('/home/login')
+        return res.redirect('/home')
 
     }
 
