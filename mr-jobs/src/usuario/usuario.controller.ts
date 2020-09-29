@@ -2,6 +2,7 @@ import {Body, Controller, Get, Param, Post, Query, Req, Res, Session} from "@nes
 import {UsuarioCreateDto} from "./dto/usuario.create-dto";
 import {validate, ValidationError} from "class-validator";
 import {TrabajoCreateDto} from "../trabajo/dto/trabajo.create-dto";
+import {DetalleTrabajoCreateDto} from "../detalleTrabajo/dto/detalleTrabajo.create-dto";
 
 //http://localhost:3000/home
 @Controller("home")
@@ -139,6 +140,7 @@ export class UsuarioController{
                     titulo: titulo,
                     controlador: controlador,
                     error: mensajeError,
+                    usuario: usuarioNuevo,
                 })
             }else{
                 console.log("exito");
@@ -154,6 +156,7 @@ export class UsuarioController{
             
         }
     }
+
 
     //http://localhost:3000/profile/:username
     @Get("/profile/:username")
@@ -188,6 +191,7 @@ export class UsuarioController{
         session.currentUser = undefined;
         //session.destroy();
         return res.redirect('/home/login')
+
     }
 
 }
