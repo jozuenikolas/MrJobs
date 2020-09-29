@@ -1,6 +1,6 @@
 import {
     IsAlpha,
-    IsAlphanumeric,
+    IsAlphanumeric, IsISO8601,
     IsNotEmpty, IsNumber, IsPositive, IsString, Max, MaxLength
 } from "class-validator";
 export class EmpleoCreateDto {
@@ -39,5 +39,9 @@ export class EmpleoCreateDto {
     @IsAlpha()
     @MaxLength(1)
     estadoEmpleo: string;
+
+    @IsISO8601()
+    @IsNotEmpty()
+    fechaPublicacion: String;
 
 }
