@@ -170,14 +170,14 @@ export class UsuarioController{
                 'usuario/profile',
                 {
                     titulo: titulo,
-                    controlador: controlador
+                    controlador: controlador,
+                    currentUser: session.currentUser,
+                    currentProfile: parametrosRuta.nombreUsuario
                 });
         }else {
             return res.redirect("/home/login")
         }
     }
-
-
 
     @Get('logout')
     logout(
