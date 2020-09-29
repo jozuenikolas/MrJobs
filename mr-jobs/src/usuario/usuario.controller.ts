@@ -124,12 +124,24 @@ export class UsuarioController{
         trabajoNuevo.organizacion = parametrosCuerpo.empresa;
         trabajoNuevo.tipo = parametrosCuerpo.tipoEmpleo;
         trabajoNuevo.ubicacion = parametrosCuerpo.ubicacion;
+        const nombreUsuario = parametrosCuerpo.nombre;
         try {
             const errores: ValidationError[] = await validate(trabajoNuevo)
             if (errores.length > 0) {
+                console.log(errores)
+                const mensajeError = 'No se pudo guardar la información de empleo, ingrese la información correcta'
+                const controlador = "signup2";
+                const titulo = "Registrarse";
 
+                return res.render('usuario/signupParte2',{
+                    titulo: titulo,
+                    controlador: controlador,
+                    error: mensajeError,
+                })
             }else{
-
+                console.log("exito");
+                console.log(trabajoNuevo)
+                console.log(nombreUsuario)
             }
 
         }catch (e) {

@@ -15,14 +15,14 @@ export class DetalleTrabajoEntity {
     @Column({
         name:'anioInicio',
         nullable: false,
-        type: "datetime",
+        type: "date",
     })
     anioInicio:string;
 
     @Column({
         name:'anioFin',
         nullable: false,
-        type: "datetime",
+        type: "date",
     })
     anioFin:string;
 

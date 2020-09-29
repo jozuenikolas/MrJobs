@@ -12,15 +12,15 @@
         <%existeNombre = true%>
         <%existeApellido = true%>
         <%existeCorreo = true%>
-        <%nombre = usuario.nombre%>
-        <%apellido = usuario.apellido%>
-        <%cedula = usuario.cedula%>
+
         <%}%>
 
         <% if(typeof error !== 'undefined'){%>
-            <p>Mensaje Error: <%= error%></p>
+            <div class="alert alert-danger" role="alert">
+                Error: <%= error%>
+            </div>
         <%}%>
-        <form action="<%= existeTrabajo ? '/usuario/editarDesdeVista/'+usuario.id : '/usuario/crearDesdeVista'%>"
+        <form action="/home/crearDesdeVista"
               method="POST">
             <div class="form-group">
                 <label for="empresaID">Empresa</label>
@@ -58,6 +58,7 @@
                        name="fechaFin" class="form-control"
                        placeholder="Fecha de fin del trabajo">
             </div>
+            <%- include('../compartido/hiddenLabels/usuarioLabels')%>
 
             <button type="submit" class="btn btn-primary">Registrarse</button>
             <button type="reset" class="btn btn-primary">limpiar</button>
