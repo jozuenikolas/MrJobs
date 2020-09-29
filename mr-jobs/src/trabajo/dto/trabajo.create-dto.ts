@@ -1,27 +1,28 @@
 import {
     IsAlphanumeric,
-    IsNotEmpty, MaxLength
+    IsNotEmpty, IsString, MaxLength
 } from "class-validator";
 
 export class TrabajoCreateDto {
 
     @IsNotEmpty()
-    @IsAlphanumeric()
+    @IsString()
     @MaxLength(100)
     nombreTrabajo: string;
 
     @IsNotEmpty()
+    @IsString()
     @IsAlphanumeric()
     @MaxLength(100)
     tipo: string;
 
     @IsNotEmpty()
-    @IsAlphanumeric()
+    @IsString()
     @MaxLength(100)
     ubicacion: string;
 
     @IsNotEmpty()
-    @IsAlphanumeric()
+    @IsString()
     @MaxLength(100)
     organizacion: string;
 }

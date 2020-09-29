@@ -1,17 +1,17 @@
 import {
     IsAlphanumeric,
-    IsNotEmpty, IsNumber, IsPositive, MaxLength
+    IsNotEmpty, IsNumber, IsPositive, IsString, MaxLength
 } from "class-validator";
 
 export class  EmpresaCreateDto {
 
     @IsNotEmpty()
-    @IsAlphanumeric()
+    @IsString()
     @MaxLength(100)
     nombreEmpresa: string;
 
     @IsNotEmpty()
-    @IsAlphanumeric()
+    @IsString()
     @MaxLength(100)
     sectorEmpresa: string;
 
