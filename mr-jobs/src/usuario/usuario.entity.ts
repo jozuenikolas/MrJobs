@@ -8,8 +8,9 @@ import {RolEntity} from "../rol/rol.entity";
 /*@Index([ //INDICES DE BUSQUEDA ---- NOMBRES DE LAS PROPIEDADES DE LA CLASE
     'nombre',
     'apellido',
-    'cedula'
-])*/
+    'correo'
+],{unique: true}
+)*/
 //@Index(['nombre','apellido','cedula'], // INDICES COMPUESTOS
 //    {unique:true})
 @Entity('usuario') //nombre de la tabla de base de datos}

@@ -2,12 +2,17 @@ import {Body, Controller, Get, Param, Post, Query, Req, Res, Session} from "@nes
 import {UsuarioCreateDto} from "./dto/usuario.create-dto";
 import {validate, ValidationError} from "class-validator";
 import {TrabajoCreateDto} from "../trabajo/dto/trabajo.create-dto";
+import {UsuarioService} from "./usuario.service";
 import {DetalleTrabajoCreateDto} from "../detalleTrabajo/dto/detalleTrabajo.create-dto";
+import {UsuarioEntity} from "./usuario.entity";
 
 //http://localhost:3000/home
 @Controller("home")
 export class UsuarioController{
-
+    constructor(
+        private readonly _usuarioService: UsuarioService,
+    ) {
+    }
 
     //http://localhost:3000/usuario/prueba
     @Get("prueba")
@@ -162,16 +167,30 @@ export class UsuarioController{
                 console.log(parametrosCuerpo)
                 session.currentUser = username;
                 console.log(session)
-
                 console.log(usuarioNuevo)
                 console.log(detalleTrabajo)
-
+                let usuarioGrabar = new UsuarioEntity()
+                usuarioGrabar.username= username,
+                usuarioGrabar.correo= usuarioNuevo.correo,
+                usuarioGrabar.password= usuarioNuevo.password,
+                usuarioGrabar.nombre= usuarioNuevo.nombre,
+                usuarioGrabar.apellido= usuarioNuevo.apellido,
+                usuarioGrabar.pais= usuarioNuevo.pais,
+                usuarioGrabar.ciudad= usuarioNuevo.ciudad
+                let respuestaCreacionUsuario;
+                try {
+                    respuestaCreacionUsuario = await this._usuarioService.crearUno(usuarioGrabar);
+                    console.log("usuairo creado")
+                } catch (e) {
+                    console.log(e)
                 return res.redirect(`/home/profile/${username}`)
+                }
             }
 
         }catch (e) {
             
         }
+
     }
 
 

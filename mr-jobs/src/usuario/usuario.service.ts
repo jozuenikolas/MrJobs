@@ -10,4 +10,7 @@ export class UsuarioService{
         private repositorio: Repository<UsuarioEntity>
     ) {
     }
+    crearUno(nuevoUsuario: UsuarioEntity){
+        return this.repositorio.save(nuevoUsuario) //promesa
+    }
 }
