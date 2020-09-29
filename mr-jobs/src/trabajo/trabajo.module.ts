@@ -1,6 +1,7 @@
 import {Module} from "@nestjs/common";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {TrabajoEntity} from "./trabajo.entity";
+import {TrabajoService} from "./trabajo.service";
 
 @Module({
     imports: [
@@ -13,7 +14,10 @@ import {TrabajoEntity} from "./trabajo.entity";
 
     ],
     providers: [
-
+        TrabajoService
+    ],
+    exports:[
+      TrabajoService
     ]
 })
 

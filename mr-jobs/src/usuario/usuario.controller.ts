@@ -1,16 +1,30 @@
-import {Body, Controller, Get, Param, Post, Query, Req, Res, Session} from "@nestjs/common";
+import {
+    Body,
+    Controller,
+    Get,
+    InternalServerErrorException,
+    Param,
+    Post,
+    Query,
+    Req,
+    Res,
+    Session
+} from "@nestjs/common";
 import {UsuarioCreateDto} from "./dto/usuario.create-dto";
 import {validate, ValidationError} from "class-validator";
 import {TrabajoCreateDto} from "../trabajo/dto/trabajo.create-dto";
 import {UsuarioService} from "./usuario.service";
 import {DetalleTrabajoCreateDto} from "../detalleTrabajo/dto/detalleTrabajo.create-dto";
 import {UsuarioEntity} from "./usuario.entity";
+import {TrabajoService} from "../trabajo/trabajo.service";
+import {TrabajoEntity} from "../trabajo/trabajo.entity";
 
 //http://localhost:3000/home
 @Controller("home")
 export class UsuarioController{
     constructor(
         private readonly _usuarioService: UsuarioService,
+        private readonly _trabajoService: TrabajoService,
     ) {
     }
 
@@ -134,6 +148,7 @@ export class UsuarioController{
         trabajoNuevo.ubicacion = parametrosCuerpo.ubicacion;
 
         const usuarioNuevo = new UsuarioCreateDto()
+        usuarioNuevo.username = parametrosCuerpo.username;
         usuarioNuevo.correo = parametrosCuerpo.correo;
         usuarioNuevo.password = parametrosCuerpo.password;
         usuarioNuevo.nombre = parametrosCuerpo.nombre;
@@ -145,7 +160,6 @@ export class UsuarioController{
         detalleTrabajo.anioFin = parametrosCuerpo.fechaFin;
         detalleTrabajo.anioInicio = parametrosCuerpo.fechaFin;
 
-        const username = parametrosCuerpo.username;
         try {
             const errores: ValidationError[] = await validate(trabajoNuevo)
             if (errores.length > 0) {
@@ -163,27 +177,36 @@ export class UsuarioController{
             }else{
                 console.log("exito");
                 console.log(trabajoNuevo)
-                console.log(username)
-                console.log(parametrosCuerpo)
-                session.currentUser = username;
+                session.currentUser = usuarioNuevo.username;
                 console.log(session)
                 console.log(usuarioNuevo)
                 console.log(detalleTrabajo)
                 let usuarioGrabar = new UsuarioEntity()
-                usuarioGrabar.username= username,
-                usuarioGrabar.correo= usuarioNuevo.correo,
-                usuarioGrabar.password= usuarioNuevo.password,
-                usuarioGrabar.nombre= usuarioNuevo.nombre,
-                usuarioGrabar.apellido= usuarioNuevo.apellido,
-                usuarioGrabar.pais= usuarioNuevo.pais,
-                usuarioGrabar.ciudad= usuarioNuevo.ciudad
+                usuarioGrabar= userDTOtoEntity(usuarioNuevo,usuarioGrabar)
+
                 let respuestaCreacionUsuario;
                 try {
                     respuestaCreacionUsuario = await this._usuarioService.crearUno(usuarioGrabar);
                     console.log("usuairo creado")
                 } catch (e) {
                     console.log(e)
-                return res.redirect(`/home/profile/${username}`)
+                    throw  new InternalServerErrorException("Error creando el usuario")
+                }
+                if (respuestaCreacionUsuario) {
+                    let trabajoGrabar = new  TrabajoEntity()
+                    trabajoGrabar = trabajoDTOtoEntity(trabajoNuevo,trabajoGrabar)
+                    let respuestaCreacionTrabajo;
+                    try {
+                        respuestaCreacionTrabajo = await this._trabajoService.crearUno(trabajoGrabar)
+                        console.log("trabajo creado")
+                    } catch (e) {
+                        console.log(e)
+                        throw  new InternalServerErrorException("Error creando el empleo")
+                    }
+                    if (respuestaCreacionTrabajo) {
+
+                        return res.redirect(`/home/profile/${usuarioNuevo.username}`)
+                    }
                 }
             }
 
@@ -230,4 +253,23 @@ export class UsuarioController{
 
     }
 
+}
+
+function userDTOtoEntity(usuarioDTO, usuarioEntity) {
+    usuarioEntity.username= usuarioDTO.username;
+    usuarioEntity.correo= usuarioDTO.correo;
+    usuarioEntity.password= usuarioDTO.password;
+    usuarioEntity.nombre= usuarioDTO.nombre;
+    usuarioEntity.apellido= usuarioDTO.apellido;
+    usuarioEntity.pais= usuarioDTO.pais;
+    usuarioEntity.ciudad= usuarioDTO.ciudad;
+    return usuarioEntity;
+}
+
+function trabajoDTOtoEntity(trabajoDTO, trabajoEntity) {
+    trabajoEntity.nombre = trabajoDTO.nombreTrabajo;
+    trabajoEntity.tipo = trabajoDTO.tipo;
+    trabajoEntity.ubicacion = trabajoDTO.ubicacion;
+    trabajoEntity.organizacion = trabajoDTO.organizacion;
+    return trabajoEntity;
 }

@@ -8,6 +8,8 @@ import {DetalleTrabajoModule} from "../detalleTrabajo/detalleTrabajo.module";
 
 @Module({
     imports: [
+        DetalleTrabajoModule,
+        TrabajoModule,
         TypeOrmModule.forFeature(
             [UsuarioEntity],
             'default'
