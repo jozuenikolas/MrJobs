@@ -139,7 +139,7 @@ export class UsuarioController{
         const detalleTrabajo = new DetalleTrabajoCreateDto();
         detalleTrabajo.anioFin = parametrosCuerpo.fechaFin;
         detalleTrabajo.anioInicio = parametrosCuerpo.fechaFin;
-        console.log(detalleTrabajo)
+
         const username = parametrosCuerpo.username;
         try {
             const errores: ValidationError[] = await validate(trabajoNuevo)

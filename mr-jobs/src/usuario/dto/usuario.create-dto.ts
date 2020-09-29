@@ -1,12 +1,12 @@
 import {
-    IsAlpha,
+    IsAlpha, IsAlphanumeric,
     IsEmail,
-    IsNotEmpty, MaxLength, MinLength
+    IsNotEmpty, IsString, MaxLength, MinLength
 } from "class-validator";
 
 export class UsuarioCreateDto{
 
-    @IsAlpha()
+    @IsAlphanumeric()
     @IsNotEmpty()
     @MaxLength(100)
     username: string;
@@ -37,7 +37,7 @@ export class UsuarioCreateDto{
     @MaxLength(100)
     apellido: string;
 
-    @IsAlpha()
+    @IsString()
     @IsNotEmpty()
     @MaxLength(100)
     pais: string;
