@@ -1,6 +1,8 @@
 import {Module} from "@nestjs/common";
 import {TypeOrmModule} from "@nestjs/typeorm";
 import {AplicacionEntity} from "./aplicacion.entity";
+import {AplicacionController} from "./aplicacion.controller";
+import {AplicacionService} from "./aplicacion.service";
 
 
 @Module({
@@ -11,10 +13,10 @@ import {AplicacionEntity} from "./aplicacion.entity";
         )
     ],
     controllers: [
-
+        AplicacionController
     ],
     providers: [
-
+        AplicacionService
     ]
 })
 

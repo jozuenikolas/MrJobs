@@ -2,7 +2,7 @@ import {
     IsAlpha,
     IsAlphanumeric,
     IsNotEmpty,
-    IsNumber, IsPositive, MaxLength
+    IsNumber, IsPositive, IsString, MaxLength
 
 } from "class-validator";
 
@@ -13,13 +13,9 @@ export class AplicacionCreateDto{
     @IsPositive()
     aspiracionSalarial:number;
 
-    @IsAlphanumeric()
+    @IsString()
     @IsNotEmpty()
     @MaxLength(100)
     resumen: string;
 
-    @IsAlpha()
-    @IsNotEmpty()
-    @MaxLength(2)
-    estado: string;
 }

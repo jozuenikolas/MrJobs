@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post, Query, Res, Session} from "@nestjs/common";
+import {Body, Controller, Get, Param, Post, Query, Res, Session} from "@nestjs/common";
 import {EmpresaService} from "../empresa/empresa.service";
 import {EmpleoService} from "./empleo.service";
 import {EmpleoEntity} from "./empleo.entity";
@@ -176,6 +176,30 @@ export class EmpleoController{
                 const mensajeError = "Error al crear empleo, por favor, inténtelo otra vez.";
                 return res.redirect(`/empleo/publicar?mensajeError=${mensajeError}`)
             }
+        }
+    }
+
+    //http://localhost:3000/empleo/publicacion/:idEmpleo
+    @Get("publicacion/:idEmpleo")
+    async publicacion(
+        @Res() res,
+        @Session() session,
+        @Param() parametrosRuta
+    ){
+        const estaLogueado = session.currentUser;
+        if(estaLogueado) {
+            const controlador = "empleo-publicacion";
+            const titulo = "Publicacion empleo"
+            res.render(
+                'empleo/publicacion',
+                {
+                    titulo: titulo,
+                    controlador: controlador,
+                    currentUser: session.currentUser,
+                    idEmpleo: parametrosRuta.idEmpleo
+                });
+        }else{
+            return res.redirect("/home/login")
         }
     }
 

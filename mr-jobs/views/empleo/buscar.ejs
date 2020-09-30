@@ -20,7 +20,7 @@
                         </div>
                         <div class="col-5 input-group">
                                 <input type="text" class="form-control border-1"
-                                       placeholder="Ciudad provincia, ciudad o país" name="segundoCriterioBusqueda"
+                                       placeholder="Buscar por ciudad, provincia, o país" name="segundoCriterioBusqueda"
                                        value="<%=existeSegundoCriterio ? segundoCriterioBusqueda: ''%>">
                         </div>
                         <div class="col-2 input-group">
@@ -44,7 +44,7 @@
                         <%if(empleos.length > 0){%>
                         <% empleos.forEach((empleo) =>{%>
                         <div class="col-md-4">
-                            <a class="a-no-underline" href="/empleo/publicacion/<%=empleo["id"]%>">
+                            <a class="a-no-underline" href="/aplicacion/aplicar/<%=empleo["id"]%>">
                                 <div class="card mb-4 shadow-sm border-1">
                                     <div class="card-body">
                                         <p class="card-text card-text-title m-0"><%=empleo["nombreEmpleo"]%></p>

@@ -19,10 +19,10 @@ export class EmpleoService {
     obtenerEmpleosConEmpresa(primerCriterio:string, segundoCriterio:string){
         let consulta : FindManyOptions<EmpleoEntity> = {}
 
-        console.log("SERVICIO INICIO")
+        // console.log("SERVICIO INICIO")
 
         if(primerCriterio == undefined && segundoCriterio == undefined){
-            console.log("PRMER CRITERIO Y SEGUNDO CIRTERIO VACIOS")
+            // console.log("PRMER CRITERIO Y SEGUNDO CIRTERIO VACIOS")
             consulta  = {
                 relations: [
                     "empresa"
@@ -38,7 +38,7 @@ export class EmpleoService {
                 }
             }
         } else if(primerCriterio == undefined){
-            console.log("PRMER CRITERIO VACIO Y SEGUNDO CIRTERIO LLENO")
+            // console.log("PRMER CRITERIO VACIO Y SEGUNDO CIRTERIO LLENO")
             consulta  = {
                 relations: [
                     "empresa"
@@ -55,7 +55,7 @@ export class EmpleoService {
                 }
             }
         } else if(segundoCriterio == undefined){
-            console.log("PRMER CRITERIO LLENO Y SEGUNDO CIRTERIO VACIO")
+            // console.log("PRMER CRITERIO LLENO Y SEGUNDO CIRTERIO VACIO")
             consulta  = {
                 relations: [
                     "empresa"
@@ -72,7 +72,7 @@ export class EmpleoService {
                 }
             }
         } else{
-            console.log("PRMER CRITERIO Y SEGUNDO CIRTERIO LLENOS")
+            // console.log("PRMER CRITERIO Y SEGUNDO CIRTERIO LLENOS")
             consulta  = {
                 relations: [
                     "empresa"
@@ -91,7 +91,7 @@ export class EmpleoService {
             }
         }
 
-        console.log("SERVICIO INICIO")
+        // console.log("SERVICIO INICIO")
 
 
         return this.repositorio.find(consulta)
