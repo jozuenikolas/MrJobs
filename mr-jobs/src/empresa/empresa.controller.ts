@@ -32,6 +32,7 @@ export class EmpresaController {
                     controlador: controlador,
                     currentUser: session.currentUser,
                     mensajeError: parametrosConsulta.mensajeError,
+                    registroExitoso: parametrosConsulta.registroExitoso,
                 });
         }else{
             return res.redirect("/home/login")
@@ -53,7 +54,7 @@ export class EmpresaController {
 
         if (errores.length > 0) {
             //console.log('validation failed. errors: ', errores);
-            const mensajeError = "No se pudo guardar la información de empleo, ingrese la información correcta";
+            const mensajeError = "No se pudo guardar la información de la empresa, ingrese la información correcta";
             return res.redirect(`/empresa/registrar?mensajeError=${mensajeError}`)
         } else{
             //console.log('validation succeed');
@@ -65,8 +66,9 @@ export class EmpresaController {
             empresaGuardar.numEmpleados = empresaValidar.numEmpleados
             empresaGuardar.usuario = usuario[0]
             try {
-                 await this._empresaService.crearUno(empresaGuardar);
-                 return res.redirect(`/home/profile/${username}`)
+                const registroExitoso = "success"
+                await this._empresaService.crearUno(empresaGuardar);
+                return res.redirect(`/empresa/registrar?registroExitoso=${registroExitoso}`)
             } catch (e) {
                 const mensajeError = "Error al crear empresa, por favor, inténtelo otra vez.";
                 return res.redirect(`/empresa/registrar?mensajeError=${mensajeError}`)

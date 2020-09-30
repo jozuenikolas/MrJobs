@@ -22,17 +22,17 @@ export class EmpleoCreateDto {
 
     @IsNotEmpty()
     @IsString()
-    @Max(100)
+    @MaxLength(100)
     tipoEmpleo: string;
 
     @IsNotEmpty()
     @IsString()
-    @Max(100)
+    @MaxLength(100)
     funcionLaboral: string;
 
     @IsNotEmpty()
     @IsString()
-    @Max(100)
+    @MaxLength(100)
     nivelAntiguedad: string;
 
     @IsNotEmpty()
@@ -40,8 +40,8 @@ export class EmpleoCreateDto {
     @MaxLength(1)
     estadoEmpleo: string;
 
-    @IsISO8601()
     @IsNotEmpty()
-    fechaPublicacion: String;
+    @IsISO8601()
+    fechaPublicacion: string;
 
 }

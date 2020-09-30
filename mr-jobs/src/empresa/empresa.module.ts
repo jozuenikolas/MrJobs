@@ -19,6 +19,9 @@ import {UsuarioModule} from "../usuario/usuario.module";
     ],
     providers: [
         EmpresaService
+    ],
+    exports: [
+        EmpresaService
     ]
 })
 

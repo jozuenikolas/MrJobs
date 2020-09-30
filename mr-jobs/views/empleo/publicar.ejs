@@ -1,6 +1,21 @@
 <%- include('../compartido/header/header-component')%>
 <%- include('../compartido/navbar/navbar-component')%>
 
+<%if(publicacionExitosa != undefined){%>
+    <div class="container mt-5 pt-4">
+        <div class="row">
+            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading">Bien hecho!</h4>
+                    <p>Tu empleo ha sido publicado con éxito.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<%}%>
+
+
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -12,7 +27,6 @@
 </div>
 
 
-
 <div class="container mb-5">
     <div class="row">
         <div class="col-1"></div>
@@ -22,15 +36,14 @@
                     <h4><strong>Publicar empleo</strong></h4>
                 </div>
                 <div class="card-body px-5 py-4">
-                    <form>
+                    <form method="POST" action="/empleo/publicar">
 <!--                        PRIMERA FILA-->
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="nombreEmpresaID">Empresa <span class="campo-obligatorio">*</span></label>
-                                <select id="nombreEmpresaID" class="form-control custom-select" required>
+                                <select id="nombreEmpresaID" class="form-control custom-select" name="nombreEmpresa" required>
                                     <option selected>Bonice</option>
-                                    <option>Movistar</option>
-                                    <option>Nestle</option>
+                                    <option>Fybeca</option>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
@@ -50,7 +63,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="tipoEmpleoID">Tipo de empleo <span class="campo-obligatorio">*</span></label>
-                                <select id="tipoEmpleoID" class="form-control custom-select" required>
+                                <select id="tipoEmpleoID" class="form-control custom-select" name="tipoEmpleo" required>
                                     <option selected>Jornada completa</option>
                                     <option>Media jornada</option>
                                     <option>Temporal</option>
@@ -58,7 +71,7 @@
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="nivelAntiguedadID">Nivel de antigüedad <span class="campo-obligatorio">*</span></label>
-                                <select id="nivelAntiguedadID" class="form-control custom-select" required>
+                                <select id="nivelAntiguedadID" class="form-control custom-select" name="nivelAntiguedad" required>
                                     <option selected>Prácticas</option>
                                     <option>Sin experiencia</option>
                                     <option>Itermedio</option>
@@ -69,13 +82,14 @@
 <!--                        TERCERA FILA-->
                         <div class="form-group">
                             <label for="descripcionEmpleoID">Descripción del empleo <span class="campo-obligatorio">*</span></label>
-                            <textarea class="form-control" id="descripcionEmpleoID" rows="5" required></textarea>
+                            <textarea class="form-control" id="descripcionEmpleoID" rows="5" name="descripcionEmpleo" required></textarea>
                         </div>
 
-                        <!--SI ES QUE EXISTE ERROR MOSTRAR ESO-->
-                        <div class="alert alert-danger text-center" role="alert">
-                            Aquí va el mensaje de error de validación
-                        </div>
+                        <%if(mensajeError != undefined){%>
+                            <div class="alert alert-danger text-center" role="alert">
+                                <%= mensajeError%>
+                            </div>
+                        <%}%>
 
 <!--                        BOTON-->
                         <div class="text-center">
