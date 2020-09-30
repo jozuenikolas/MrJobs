@@ -269,9 +269,42 @@ export class UsuarioController{
         @Session() session,
     ){
         let passwordRecibida = parametrosCuerpo.password;
-        let passwordBase;
         try {
-            passwordBase = await this._usuarioService.obtenerPasswordPorUsername(parametrosCuerpo.username)
+            let passwordBase = await this._usuarioService.obtenerPasswordPorUsername(parametrosCuerpo.username);
+            if(passwordBase){
+                console.log(passwordRecibida)
+                console.log(passwordBase)
+                if(passwordRecibida == passwordBase.password){
+                    console.log("iguales")
+                    session.currentUser = parametrosCuerpo.username;
+                    return res.redirect(`/home/profile/${parametrosCuerpo.username}`)
+                }else{
+                    console.log(session)
+                    const controlador = "login";
+                    const titulo = "Iniciar sesión";
+                    const mensajeError = 'Nombre de usuario o contraseña incorrectos'
+                    res.render(
+                        'usuario/login',
+                        {
+                            titulo,
+                            controlador,
+                            error: mensajeError,
+                        });
+                }
+            }else{
+                console.log(session)
+                const controlador = "login";
+                const titulo = "Iniciar sesión";
+                const mensajeError = 'Nombre de usuario o contraseña incorrectos'
+                res.render(
+                    'usuario/login',
+                    {
+                        titulo,
+                        controlador,
+                        error: mensajeError,
+                    });
+            }
+
         }catch (e) {
             console.log(e);
             const controlador = "login";
@@ -284,24 +317,10 @@ export class UsuarioController{
                     controlador,
                     error: mensajeError,
                 });
+            return ;
         }
 
-        if(passwordRecibida == passwordBase[0].password){
-            session.currentUser = parametrosCuerpo.username;
-            return res.redirect(`/home/profile/${parametrosCuerpo.username}`)
-        }else{
-            console.log(session)
-            const controlador = "login";
-            const titulo = "Iniciar sesión";
-            const mensajeError = 'Nombre de usuario o contraseña incorrectos'
-            res.render(
-                'usuario/login',
-                {
-                    titulo,
-                    controlador,
-                    error: mensajeError,
-                });
-        }
+
 
     }
 

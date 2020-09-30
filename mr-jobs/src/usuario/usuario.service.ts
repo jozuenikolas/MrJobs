@@ -55,4 +55,28 @@ export class UsuarioService{
         return this.repositorio.find(consulta)
     }
 
+    obtenerUsuarioPorUsername(username:string){
+        const consulta : FindManyOptions<UsuarioEntity> = {
+            select:[
+                "id",
+                "correo",
+                "password",
+                "nombre",
+                "apellido",
+                "pais",
+                "ciudad",
+                "detallesEducacion",
+                "detallesTrabajo",
+                "empresas",
+                "aplicaciones"
+            ],
+            where: [
+                {
+                    username: username
+                }
+            ]
+        }
+        return this.repositorio.findOneOrFail(consulta)
+    }
+
 }
