@@ -15,18 +15,18 @@
                             <div class="row no-gutters">
                                 <div class="col-md-8">
                                     <div class="card-body mx-3">
-                                        <p class="card-text card-text-title m-0">Nombre del empleo (cargo)</p>
-                                        <p class="card-text m-0">Nombre de la empresa</p>
-                                        <p class="card-text m-0">Ubicacion</p>
+                                        <p class="card-text card-text-title m-0"><%=empleo["nombreEmpleo"]%></p>
+                                        <p class="card-text m-0"><%=empleo["nombreEmpresa"]%></p>
+                                        <p class="card-text m-0"><%=empleo["ubicacionEmpleo"]%></p>
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <small class="text-muted mt-1">Fecha de publicacion</small>
+                                            <small class="text-muted mt-1"><%=empleo["fechaPublicacion"]%></small>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="card-body mx-3">
                                         <a href="#" class="btn btn-outline-primary btn-block">Guardar</a>
-                                        <a href="#" class="btn btn-primary btn-block mt-4">Solicitar</a>
+                                        <a href="/aplicacion/solicitud/<%=idEmpleo%>" class="btn btn-primary btn-block mt-4">Solicitar</a>
                                     </div>
                                 </div>
                             </div>
@@ -37,8 +37,8 @@
                         <div class="card mb-4 shadow-sm border-1">
                             <div class="card-body mx-3">
                                 <p class="card-text card-text-title">Empleo</p>
-                                <p class="card-text"><span class="punto-medio-aplicacion">·</span> Número de solicitudes</p>
-                                <p class="card-text"><span class="punto-medio-aplicacion">·</span> Nivel de antiguedad</p>
+                                <p class="card-text"><span class="punto-medio-aplicacion">·</span> <%=empleo["numAplicaciones"]%> Solicitudes</p>
+                                <p class="card-text"><span class="punto-medio-aplicacion">·</span> <%=empleo["nivelAntiguedad"]%></p>
                             </div>
                         </div>
                     </div>
@@ -47,8 +47,8 @@
                         <div class="card mb-4 shadow-sm border-1">
                             <div class="card-body mx-3">
                                 <p class="card-text card-text-title">Empresa</p>
-                                <p class="card-text"><span class="punto-medio-aplicacion">·</span> Número de empleados</p>
-                                <p class="card-text"><span class="punto-medio-aplicacion">·</span> Sector de empresa</p>
+                                <p class="card-text"><span class="punto-medio-aplicacion">·</span> <%=empleo["numEmpleados"]%> Empleados</p>
+                                <p class="card-text"><span class="punto-medio-aplicacion">·</span> <%=empleo["sectorEmpresa"]%></p>
                             </div>
                         </div>
                     </div>
@@ -57,7 +57,7 @@
                         <div class="card mb-4 shadow-sm border-1">
                             <div class="card-body mx-3">
                                 <p class="card-text card-text-title m-0">Descripcion</p>
-                                <p class="card-text m-0">descripcionEmpleo</p>
+                                <p class="card-text m-0"><%=empleo["descripcionEmpleo"]%></p>
                             </div>
                         </div>
                     </div>
@@ -68,17 +68,17 @@
                                 <div class="col-md-6">
                                     <div class="card-body mx-3">
                                         <p class="card-text card-text-title m-0">Nivel de experiencia</p>
-                                        <p class="card-text m-0">nivelAntiguedad</p>
+                                        <p class="card-text m-0"><%=empleo["nivelAntiguedad"]%></p>
                                         <p class="card-text card-text-title m-0 mt-3">Sector</p>
-                                        <p class="card-text m-0">sectorEmpresa</p>
+                                        <p class="card-text m-0"><%=empleo["sectorEmpresa"]%></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="card-body mx-3">
                                         <p class="card-text card-text-title m-0">Tipo de empleo</p>
-                                        <p class="card-text m-0 ">tipoEmpleo</p>
+                                        <p class="card-text m-0 "><%=empleo["tipoEmpleo"]%></p>
                                         <p class="card-text card-text-title m-0 mt-3">Función laboral</p>
-                                        <p class="card-text m-0">funcionLaboral</p>
+                                        <p class="card-text m-0"><%=empleo["funcionLaboral"]%></p>
                                     </div>
                                 </div>
                             </div>
@@ -92,53 +92,34 @@
 
         <div class="col-md-4 mycontent-right">
             <div class="col-12 pt-3">
-                <span>Otros empleos de Fybeca</span>
+                <span>Otros empleos de <%=nombreEmpresa%></span>
             </div>
-            <div class="col-md-12 mt-3">
-                <a class="a-no-underline" href="">
-                    <div class="card mb-4 shadow-sm border-1">
-                        <div class="card-body">
-                            <p class="card-text card-text-title m-0">Administracion</p>
-                            <p class="card-text m-0">Fybeca</p>
-                            <p class="card-text m-0">Quito, Pichincha, Ecuador</p>
-                            <hr class="hr-card-empleo">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">2020/09/30</small>
+            <%if(empleos.length > 0){%>
+                <% empleos.forEach((empleo) =>{%>
+                <div class="col-md-12 mt-3">
+                    <a class="a-no-underline" href="/aplicacion/aplicar/<%=empleo["id"]%>">
+                        <div class="card mb-4 shadow-sm border-1">
+                            <div class="card-body">
+                                <p class="card-text card-text-title m-0"><%=empleo["nombreEmpleo"]%></p>
+                                <p class="card-text m-0"><%=empleo["nombreEmpresa"]%></p>
+                                <p class="card-text m-0"><%=empleo["ubicacionEmpleo"]%></p>
+                                <hr class="hr-card-empleo">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"><%=empleo["fechaPublicacion"]%></small>
+                                </div>
                             </div>
                         </div>
+                    </a>
+                </div>
+                <%})%>
+            <%}else{%>
+                <div class="col-md-12 mt-3">
+                    <div class="alert alert-info" role="alert">
+                        Esta empresa no tiene más empleos
                     </div>
-                </a>
-            </div>
-            <div class="col-12">
-                <a class="a-no-underline" href="">
-                    <div class="card mb-4 shadow-sm border-1">
-                        <div class="card-body">
-                            <p class="card-text card-text-title m-0">Administracion</p>
-                            <p class="card-text m-0">Fybeca</p>
-                            <p class="card-text m-0">Quito, Pichincha, Ecuador</p>
-                            <hr class="hr-card-empleo">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">2020/09/30</small>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div class="col-12">
-                <a class="a-no-underline" href="">
-                    <div class="card mb-4 shadow-sm border-1">
-                        <div class="card-body">
-                            <p class="card-text card-text-title m-0">Administracion</p>
-                            <p class="card-text m-0">Fybeca</p>
-                            <p class="card-text m-0">Quito, Pichincha, Ecuador</p>
-                            <hr class="hr-card-empleo">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <small class="text-muted">2020/09/30</small>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+                </div>
+
+            <%}%>
         </div>
 
     </div>

@@ -20,7 +20,11 @@ import {UsuarioModule} from "../usuario/usuario.module";
     ],
     providers: [
         EmpleoService
+    ],
+    exports: [
+        EmpleoService
     ]
+
 })
 
 export class EmpleoModule{}

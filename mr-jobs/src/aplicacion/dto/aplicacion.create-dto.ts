@@ -15,7 +15,7 @@ export class AplicacionCreateDto{
 
     @IsString()
     @IsNotEmpty()
-    @MaxLength(100)
-    resumen: string;
+    @MaxLength(500)
+    razon: string;
 
 }

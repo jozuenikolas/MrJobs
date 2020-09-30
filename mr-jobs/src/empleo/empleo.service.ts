@@ -2,7 +2,6 @@ import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {FindManyOptions, Like, Repository} from "typeorm";
 import {EmpleoEntity} from "./empleo.entity";
-import {UsuarioEntity} from "../usuario/usuario.entity";
 
 @Injectable()
 export class EmpleoService {
@@ -94,6 +93,45 @@ export class EmpleoService {
         // console.log("SERVICIO INICIO")
 
 
+        return this.repositorio.find(consulta)
+    }
+
+    obtenerEmpleoEmpresaPorIdEmpleo(idEmpleo:string){
+        const consulta : FindManyOptions<EmpleoEntity> = {
+            relations: [
+                "empresa"
+            ],
+            where:[
+                {
+                    id: idEmpleo,
+                }
+            ]
+        }
+        return this.repositorio.find(consulta)
+    }
+
+    obtenerEmpleoAplicacionesPorIdEmple(idEmpleo:string){
+        const consulta : FindManyOptions<EmpleoEntity> = {
+            relations: [
+                "aplicaciones"
+            ],
+            where:[
+                {
+                    id: idEmpleo,
+                }
+            ]
+        }
+        return this.repositorio.find(consulta)
+    }
+
+    obtenerSoloEmpleoPorIdEmpleo(idEmpleo:string){
+        const consulta : FindManyOptions<EmpleoEntity> = {
+            where:[
+                {
+                    id: idEmpleo,
+                }
+            ]
+        }
         return this.repositorio.find(consulta)
     }
 

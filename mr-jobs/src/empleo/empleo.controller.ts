@@ -48,7 +48,6 @@ export class EmpleoController{
                 }else{
                     empleos.push(empleo)
                 }
-
             })
             // console.log(empleos)
 

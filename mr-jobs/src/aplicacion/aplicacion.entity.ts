@@ -22,13 +22,13 @@ export class AplicacionEntity {
     aspiracionSalarial:number;
 
     @Column({
-        name: 'resumen',
+        name: 'razon',
         type: "varchar",
         nullable: false,
         unique: false,
-        length: '100',
+        length: '500',
     })
-    resumen: string;
+    razon: string;
 
 
     @ManyToOne(

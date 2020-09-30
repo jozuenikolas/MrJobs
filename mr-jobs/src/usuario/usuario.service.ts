@@ -75,12 +75,23 @@ export class UsuarioService{
         }
         return this.repositorio.findOneOrFail(consulta)
     }
-
+    
     obtenerDetalleTrabajoPorUserName(username: string){
         const consulta : FindManyOptions<UsuarioEntity> = {
             relations: [
                 "detallesTrabajo"
             ],
+            where: [
+                {
+                    username: username
+                }
+            ]
+        }
+        return this.repositorio.find(consulta)
+    }
+
+    obtenerSoloUsuarioPorUsername(username:string){
+        const consulta : FindManyOptions<UsuarioEntity> = {
             where: [
                 {
                     username: username
