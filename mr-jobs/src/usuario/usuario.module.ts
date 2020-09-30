@@ -20,6 +20,9 @@ import {DetalleTrabajoModule} from "../detalleTrabajo/detalleTrabajo.module";
     ],
     providers: [
         UsuarioService,
+    ],
+    exports: [
+        UsuarioService,
     ]
 })
 

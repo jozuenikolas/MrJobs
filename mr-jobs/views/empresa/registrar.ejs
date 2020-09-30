@@ -5,13 +5,9 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-
             <div class="jumbotron bg-transparent m-0">
                 <h4 class="display-4 text-center p-0 m-0">¡Registra tu empresa y empieza a brindar oportunidades al mundo!</h4>
             </div>
-
-
-
         </div>
     </div>
 </div>
@@ -26,7 +22,7 @@
                 </div>
                 <div class="card-body px-5 py-4">
 
-                    <form>
+                    <form method="POST" action="/empresa/registrar">
                         <div class="form-group">
                             <label for="nombreEmpresaID">Nombre <span class="campo-obligatorio">*</span></label>
                             <input type="text" class="form-control"
@@ -42,11 +38,13 @@
                             <input type="number" class="form-control"
                                    id="numEmpleadosID" name="numEmpleados" required>
                         </div>
-<!--                        SI ES QUE EXISTE ERROR MOSTRAR ESO-->
-                        <div class="alert alert-danger text-center" role="alert">
-                            Aquí va el mensaje de error de validación
-                        </div>
 
+
+                        <%if(mensajeError != undefined){%>
+                        <div class="alert alert-danger text-center" role="alert">
+                            <%= mensajeError%>
+                        </div>
+                        <%}%>
                         <div class="text-center">
                             <div class="row pt-2">
                                 <div class="col-3"></div>
@@ -63,6 +61,7 @@
         </div>
     </div>
 </div>
+
 
 
 <%- include('../compartido/footer/footer-component')%>

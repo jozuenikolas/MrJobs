@@ -25,7 +25,6 @@ export class UsuarioService{
                 }
             ]
         }
-
         return this.repositorio.find(consulta)
     }
 
