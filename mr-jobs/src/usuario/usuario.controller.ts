@@ -20,6 +20,7 @@ import {TrabajoService} from "../trabajo/trabajo.service";
 import {TrabajoEntity} from "../trabajo/trabajo.entity";
 import {DetalleTrabajoService} from "../detalleTrabajo/detalleTrabajo.service";
 import {DetalleTrabajoEntity} from "../detalleTrabajo/detalleTrabajo.entity";
+import {type} from "os";
 
 //http://localhost:3000/home
 @Controller("home")
@@ -180,8 +181,7 @@ export class UsuarioController{
         }else{
             console.log("exito");
             console.log(trabajoNuevo)
-            session.currentUser = usuarioNuevo.username;
-            console.log(session)
+
             console.log(usuarioNuevo)
             console.log(detalleTrabajo)
             let usuarioGrabar = new UsuarioEntity()
@@ -223,6 +223,8 @@ export class UsuarioController{
                         })
                     }
                     if(respuestaCreacionDetalleTrabajo){
+                        session.currentUser = usuarioNuevo.username;
+                        console.log(session)
                         return res.redirect(`/home/profile/${usuarioNuevo.username}`)
                     }else{
                         throw  new InternalServerErrorException({
@@ -258,6 +260,35 @@ export class UsuarioController{
         }else {
             return res.redirect("/home/login")
         }
+    }
+
+    @Post('login')
+    async loginVerificacion(
+        @Res() res,
+        @Body() parametrosCuerpo,
+        @Session() session,
+    ){
+        let passwordRecibida = parametrosCuerpo.password;
+        let passwordBase = await this._usuarioService.obtenerPasswordPorUsername(parametrosCuerpo.username)
+
+        if(passwordRecibida == passwordBase[0].password){
+
+            return res.redirect(`/home/profile/${parametrosCuerpo.username}`)
+        }else{
+            session.currentUser = parametrosCuerpo.username;
+            console.log(session)
+            const controlador = "login";
+            const titulo = "Iniciar sesión";
+            const mensajeError = 'Nombre de usuario o contraseña incorrectos'
+            res.render(
+                'usuario/login',
+                {
+                    titulo,
+                    controlador,
+                    error: mensajeError,
+                });
+        }
+
     }
 
     @Get('logout')

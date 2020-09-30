@@ -27,5 +27,18 @@ export class UsuarioService{
         }
         return this.repositorio.find(consulta)
     }
+    obtenerPasswordPorUsername(username:string){
+        const consulta : FindManyOptions<UsuarioEntity> = {
+            select:[
+                "password"
+            ],
+            where: [
+                {
+                    username: username
+                }
+            ]
+        }
+        return this.repositorio.find(consulta)
+    }
 
 }
