@@ -27,18 +27,24 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbars">
+
         <ul class="navbar-nav ml-auto ">
             <%if(controlador == 'profile' || controlador == 'empleo-publicar' || controlador == 'empresa-registrar' || controlador == 'empleo-publicacion' || controlador == 'aplicacion-aplicar' || controlador == 'aplicacion-solicitud'){%>
                 <li class="nav-item active ">
-                    <a class="nav-link" href="/empleo/buscar"><button type="button" class="btn btn-primary border-1-navbar">Buscar empleo</button><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/empleo/buscar"><button type="button" class="btn btn-primary border-1-navbar btn-size-navbar">Buscar empleo</button><span class="sr-only">(current)</span></a>
                 </li>
             <%}if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empresa-registrar' || controlador == 'empleo-publicacion' || controlador == 'aplicacion-aplicar' || controlador == 'aplicacion-solicitud'){%>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/empleo/publicar"><button type="button" class="btn btn-primary border-1-navbar">Publicar empleo</button><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/empleo/publicar"><button type="button" class="btn btn-primary border-1-navbar btn-size-navbar">Publicar empleo</button><span class="sr-only">(current)</span></a>
                 </li>
             <%}if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empleo-publicar' || controlador == 'empleo-publicacion' || controlador == 'aplicacion-aplicar' || controlador == 'aplicacion-solicitud'){%>
                 <li class="nav-item active">
-                    <a class="nav-link" href="/empresa/registrar"><button type="button" class="btn btn-primary border-1-navbar">Registrar empresa</button><span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/empresa/registrar"><button type="button" class="btn btn-primary border-1-navbar btn-size-navbar">Registrar empresa</button><span class="sr-only">(current)</span></a>
+                </li>
+
+            <%}if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empresa-registrar' || controlador == 'empleo-publicar' || controlador == 'empleo-publicacion' || controlador == 'aplicacion-aplicar' || controlador == 'aplicacion-solicitud'){%>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/home/logout"><button type="button" class="btn btn-danger border-1-navbar btn-size-navbar">Cerrar sesión</button><span class="sr-only">(current)</span></a>
                 </li>
             <%}%>
         </ul>
