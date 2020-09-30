@@ -4,6 +4,7 @@ import {EmpleoService} from "./empleo.service";
 import {EmpleoEntity} from "./empleo.entity";
 import {EmpleoCreateDto} from "./dto/empleo.create-dto";
 import {validate, ValidationError} from "class-validator";
+import {UsuarioService} from "../usuario/usuario.service";
 
 //http://localhost:3000/empleo
 @Controller("empleo")
@@ -12,12 +13,13 @@ export class EmpleoController{
     constructor(
         private readonly _empresaService: EmpresaService,
         private readonly _empleoService: EmpleoService,
+        private readonly _usuarioService: UsuarioService,
     ) {
     }
 
     //http://localhost:3000/empleo/buscar
     @Get("buscar")
-    buscar(
+    async buscar(
         @Res() res,
         @Session() session,
     ){
@@ -25,11 +27,27 @@ export class EmpleoController{
         if(estaLogueado) {
             const controlador = "empleo-buscar";
             const titulo = "Buscar empleo"
+
+            let empleos: Array<string> = []
+
+            const respuesta = await this._empleoService.obtenerEmpleosConEmpresa()
+            //console.log(respuesta)
+
+            respuesta.forEach((objeto) =>{
+                console.log(objeto.id)
+                console.log(objeto.nombreEmpleo)
+                console.log(objeto.empresa["nombreEmpresa"])
+                console.log(objeto.ubicacionEmpleo)
+                console.log(objeto.fechaPublicacion)
+            })
+
+
             res.render(
                 'empleo/buscar',
                 {
                     titulo: titulo,
                     controlador: controlador,
+                    empleos: empleos,
                     currentUser: session.currentUser,
                 });
         }else{
@@ -39,7 +57,7 @@ export class EmpleoController{
 
     //http://localhost:3000/empleo/publicar
     @Get("publicar")
-    publicar(
+    async publicar(
         @Res() res,
         @Session() session,
         @Query() parametrosConsulta,
@@ -48,12 +66,24 @@ export class EmpleoController{
         if(estaLogueado) {
             const controlador = "empleo-publicar";
             const titulo = "Publicar empleo"
+            const currentUser = session.currentUser;
+            const repuesta = await this._usuarioService.obtenerEmpresasPorUsername(currentUser)
+            let empresas: Array<string> = []
+            if(repuesta[0]["empresas"].length > 0){
+
+                repuesta[0]["empresas"].forEach((objeto) =>{
+                    console.log(objeto.nombreEmpresa)
+                    empresas.push(objeto.nombreEmpresa)
+                })
+            }
+            //console.log(empresas)
             res.render(
                 'empleo/publicar',
                 {
                     titulo: titulo,
                     controlador: controlador,
-                    currentUser: session.currentUser,
+                    currentUser: currentUser,
+                    empresas: empresas,
                     mensajeError: parametrosConsulta.mensajeError,
                     publicacionExitosa: parametrosConsulta.publicacionExitosa,
                 });

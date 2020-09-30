@@ -42,8 +42,9 @@
                             <div class="form-group col-md-4">
                                 <label for="nombreEmpresaID">Empresa <span class="campo-obligatorio">*</span></label>
                                 <select id="nombreEmpresaID" class="form-control custom-select" name="nombreEmpresa" required>
-                                    <option selected>Bonice</option>
-                                    <option>Fybeca</option>
+                                    <% empresas.forEach((value) =>{%>
+                                        <option><%=value%></option>
+                                    <%})%>
                                 </select>
                             </div>
                             <div class="form-group col-md-4">
