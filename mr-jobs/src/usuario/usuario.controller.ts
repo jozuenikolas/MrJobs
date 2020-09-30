@@ -252,9 +252,14 @@ export class UsuarioController{
             let usuario;
             try {
                 usuario = await this._usuarioService.obtenerUsuarioPorUsername(parametrosRuta.username);
+
                 let consultaUsuarioDetalleTrabajo;
                 consultaUsuarioDetalleTrabajo = await this._usuarioService.obtenerDetalleTrabajoPorUserName(parametrosRuta.username);
                 let detalleTrabajo= new DetalleTrabajoEntity();
+                let values;
+                for(values in consultaUsuarioDetalleTrabajo){
+                    detalleTrabajo= values.detallesTrabajo;
+                }
                 detalleTrabajo= consultaUsuarioDetalleTrabajo[0].detallesTrabajo;
                 console.log(detalleTrabajo);
                 console.log(detalleTrabajo[0].id);
@@ -272,7 +277,7 @@ export class UsuarioController{
                             currentUser: session.currentUser,
                             currentProfile: parametrosRuta.username,
                             usuario: usuario,
-                            trabajo: trabajoInformacion
+                            trabajo: consultaTrabajo
                         });
                 }else{
                     throw new  InternalServerErrorException("error cargando el perfil");
