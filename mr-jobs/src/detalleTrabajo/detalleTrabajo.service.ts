@@ -1,7 +1,8 @@
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {DetalleTrabajoEntity} from "./detalleTrabajo.entity";
-import {Repository} from "typeorm";
+import {FindManyOptions, Repository} from "typeorm";
+import {UsuarioEntity} from "../usuario/usuario.entity";
 
 @Injectable()
 export class DetalleTrabajoService{
@@ -13,4 +14,19 @@ export class DetalleTrabajoService{
     crearUno(nuevoDetalleTrabajo: DetalleTrabajoEntity){
         return this.repositorio.save(nuevoDetalleTrabajo) //promesa
     }
+
+    obtenerTrabajoPorDetalleTrabajoID(detalleTrabajoID: number){
+        const consulta : FindManyOptions<DetalleTrabajoEntity> = {
+            relations: [
+                "trabajo"
+            ],
+            where: [
+                {
+                    id: detalleTrabajoID
+                }
+            ]
+        }
+        return this.repositorio.find(consulta)
+    }
+
 }

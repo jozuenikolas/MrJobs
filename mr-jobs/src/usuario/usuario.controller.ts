@@ -249,14 +249,59 @@ export class UsuarioController{
         if(estaLogueado){
             const controlador = "profile";
             const titulo = "Profile"
-            res.render(
-                'usuario/profile',
-                {
-                    titulo: titulo,
-                    controlador: controlador,
-                    currentUser: session.currentUser,
-                    currentProfile: parametrosRuta.username
-                });
+            let usuario;
+            try {
+                usuario = await this._usuarioService.obtenerUsuarioPorUsername(parametrosRuta.username);
+                let consultaUsuarioDetalleTrabajo;
+                consultaUsuarioDetalleTrabajo = await this._usuarioService.obtenerDetalleTrabajoPorUserName(parametrosRuta.username);
+                let detalleTrabajo= new DetalleTrabajoEntity();
+                detalleTrabajo= consultaUsuarioDetalleTrabajo[0].detallesTrabajo;
+                console.log(detalleTrabajo);
+                console.log(detalleTrabajo[0].id);
+
+                let consultaTrabajo = await this._detalleTrabajoService.obtenerTrabajoPorDetalleTrabajoID(detalleTrabajo[0].id);
+
+                if(consultaTrabajo){
+                    let trabajoInformacion = consultaTrabajo[0]
+                    console.log(trabajoInformacion)
+                    res.render(
+                        'usuario/profile',
+                        {
+                            titulo: titulo,
+                            controlador: controlador,
+                            currentUser: session.currentUser,
+                            currentProfile: parametrosRuta.username,
+                            usuario: usuario,
+                            trabajo: trabajoInformacion
+                        });
+                }else{
+                    let idEducacion;
+                    try {
+
+                        if(idEducacion){
+                            console.log(idEducacion)
+                            //consultar eduacacion
+                            res.render(
+                                'usuario/profile',
+                                {
+                                    titulo: titulo,
+                                    controlador: controlador,
+                                    currentUser: session.currentUser,
+                                    currentProfile: parametrosRuta.username,
+                                    usuario: usuario
+                                });
+                        }else{
+
+                        }
+                    }catch (e) {
+
+                    }
+                }
+            }catch (e) {
+                console.log(e)
+                throw new  InternalServerErrorException("error cargando el perfil")
+            }
+
         }else {
             return res.redirect("/home/login")
         }
@@ -272,10 +317,7 @@ export class UsuarioController{
         try {
             let passwordBase = await this._usuarioService.obtenerPasswordPorUsername(parametrosCuerpo.username);
             if(passwordBase){
-                console.log(passwordRecibida)
-                console.log(passwordBase)
                 if(passwordRecibida == passwordBase.password){
-                    console.log("iguales")
                     session.currentUser = parametrosCuerpo.username;
                     return res.redirect(`/home/profile/${parametrosCuerpo.username}`)
                 }else{
@@ -331,7 +373,7 @@ export class UsuarioController{
         @Req() req
     ){
         session.currentUser = undefined;
-        //session.destroy();
+        session.destroy();
         return res.redirect('/home')
 
     }

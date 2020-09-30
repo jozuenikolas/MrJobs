@@ -27,6 +27,7 @@ export class UsuarioService{
         }
         return this.repositorio.find(consulta)
     }
+
     obtenerPasswordPorUsername(username:string){
         const consulta : FindManyOptions<UsuarioEntity> = {
             select:[
@@ -65,10 +66,6 @@ export class UsuarioService{
                 "apellido",
                 "pais",
                 "ciudad",
-                "detallesEducacion",
-                "detallesTrabajo",
-                "empresas",
-                "aplicaciones"
             ],
             where: [
                 {
@@ -77,6 +74,20 @@ export class UsuarioService{
             ]
         }
         return this.repositorio.findOneOrFail(consulta)
+    }
+
+    obtenerDetalleTrabajoPorUserName(username: string){
+        const consulta : FindManyOptions<UsuarioEntity> = {
+            relations: [
+                "detallesTrabajo"
+            ],
+            where: [
+                {
+                    username: username
+                }
+            ]
+        }
+        return this.repositorio.find(consulta)
     }
 
 }

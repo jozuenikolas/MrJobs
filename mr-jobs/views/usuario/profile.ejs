@@ -1,17 +1,51 @@
 <%- include('../compartido/header/header-component')%>
 <%- include('../compartido/navbar/navbar-component')%>
 
+<h1 hidden>CurrentUser: <%=currentUser%></h1>
+<h1 hidden>CurrentProfile: <%=currentProfile%></h1>
+<h1 hidden>profile</h1>
+<div class="container">
+    <div class="container profileBackground">
+        <br>
+        <div class="row align-items-center flex-row-reverse">
+            <div class="col-lg-6">
+                <div class="about-text go-to">
+                    <h3 class="dark-color"><%=currentProfile%></h3>
+                    <h6 class="theme-color lead">Información del usuario</h6>
+                    <p>Me llamo <%=usuario.nombre%> <%=usuario.apellido%></p>
+                    <p>Soy <%=trabajo.trabajo.nombre%> en <%=trabajo.trabajo.organizacion%>, <%=trabajo.trabajo.ubicacion%></p>
+                    <div class="row about-list">
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>Pais</label>
+                                <p><%=usuario.pais%></p>
+                            </div>
+                            <div class="media">
+                                <label>Ciudad</label>
+                                <p><%=usuario.ciudad%></p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>E-mail</label>
+                                <p><%=usuario.correo%></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-avatar">
+                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" title="" alt="" style="border: 1px solid black">
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+    <a href="/home/logout">
+        <button class="btn-primary btn-dark">Cerrar sesión</button>
+    </a>
+</div>
 
-<h1>CurrentUser: <%=currentUser%></h1>
-<h1>CurrentProfile: <%=currentProfile%></h1>
-<h1>profile</h1>
-
-
-
-
-
-<a href="/home/logout">
-    <button>Cerrar sesión</button>
-</a>
 
 <%- include('../compartido/footer/footer-component')%>
