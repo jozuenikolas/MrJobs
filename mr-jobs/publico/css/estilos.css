@@ -122,3 +122,23 @@ h1.formularioTitulo{
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
+
+.mycontent-right {
+    border-left: 2px solid black;
+}
+
+.mycontent-right-card{
+    border-left: 1px solid black;
+}
+
+.ul-aplicacion{
+    border-radius: 0;
+}
+
+.li-aplicacion{
+    border: 1px solid black;;
+}
+
+.punto-medio-aplicacion{
+    font-weight: bold ;
+}

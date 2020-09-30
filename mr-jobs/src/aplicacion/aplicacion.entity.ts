@@ -30,14 +30,6 @@ export class AplicacionEntity {
     })
     resumen: string;
 
-    @Column({
-        name: 'estado',
-        type: "varchar",
-        nullable: false,
-        unique: false,
-        length: '2',
-    })
-    estado: string;
 
     @ManyToOne(
         type => UsuarioEntity,

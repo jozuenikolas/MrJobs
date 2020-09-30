@@ -190,8 +190,6 @@ export class EmpleoController{
         if(estaLogueado) {
             const controlador = "empleo-publicacion";
             const titulo = "Publicacion empleo"
-
-
             res.render(
                 'empleo/publicacion',
                 {
