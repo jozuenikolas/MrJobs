@@ -272,10 +272,9 @@ export class UsuarioController{
         let passwordBase = await this._usuarioService.obtenerPasswordPorUsername(parametrosCuerpo.username)
 
         if(passwordRecibida == passwordBase[0].password){
-
+            session.currentUser = parametrosCuerpo.username;
             return res.redirect(`/home/profile/${parametrosCuerpo.username}`)
         }else{
-            session.currentUser = parametrosCuerpo.username;
             console.log(session)
             const controlador = "login";
             const titulo = "Iniciar sesión";
