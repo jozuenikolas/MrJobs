@@ -75,7 +75,7 @@ export class UsuarioService{
         }
         return this.repositorio.findOneOrFail(consulta)
     }
-    
+
     obtenerDetalleTrabajoPorUserName(username: string){
         const consulta : FindManyOptions<UsuarioEntity> = {
             relations: [
