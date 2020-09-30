@@ -275,33 +275,12 @@ export class UsuarioController{
                             trabajo: trabajoInformacion
                         });
                 }else{
-                    let idEducacion;
-                    try {
-
-                        if(idEducacion){
-                            console.log(idEducacion)
-                            //consultar eduacacion
-                            res.render(
-                                'usuario/profile',
-                                {
-                                    titulo: titulo,
-                                    controlador: controlador,
-                                    currentUser: session.currentUser,
-                                    currentProfile: parametrosRuta.username,
-                                    usuario: usuario
-                                });
-                        }else{
-
-                        }
-                    }catch (e) {
-
-                    }
+                    throw new  InternalServerErrorException("error cargando el perfil");
                 }
             }catch (e) {
                 console.log(e)
                 throw new  InternalServerErrorException("error cargando el perfil")
             }
-
         }else {
             return res.redirect("/home/login")
         }
