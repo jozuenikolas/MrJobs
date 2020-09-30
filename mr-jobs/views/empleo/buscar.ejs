@@ -1,6 +1,9 @@
 <%- include('../compartido/header/header-component')%>
 <%- include('../compartido/navbar/navbar-component')%>
 
+<% let exitePrimerCriterio = primerCriterioBusqueda !== undefined%>
+<% let existeSegundoCriterio =  segundoCriterioBusqueda !== undefined%>
+
 
 <div class="container mt-5">
     <div class="row">
@@ -8,13 +11,17 @@
             <div class="jumbotron border-2">
                 <h1 class="display-4 jumbotron-titulo pb-4 ">Encuentra tu siguiente empleo</h1>
 
-                <form>
+                <form method="POST" action="/empleo/buscar">
                     <div class="form-row">
                         <div class="col-5 input-group">
-                            <input type="text" class="form-control border-1" placeholder="Buscar por cargo, actitud o empresa">
+                            <input type="text" class="form-control border-1"
+                                   placeholder="Buscar por cargo o empresa" name="primerCriterioBusqueda"
+                                   value="<%=exitePrimerCriterio ? primerCriterioBusqueda: ''%>">
                         </div>
                         <div class="col-5 input-group">
-                                <input type="text" class="form-control border-1" placeholder="Ciudad provincia o código postal">
+                                <input type="text" class="form-control border-1"
+                                       placeholder="Ciudad provincia, ciudad o país" name="segundoCriterioBusqueda"
+                                       value="<%=existeSegundoCriterio ? segundoCriterioBusqueda: ''%>">
                         </div>
                         <div class="col-2 input-group">
                             <button class="btn btn-block btn-primary text-center border-1" type="submit" >Buscar</button>
@@ -34,22 +41,31 @@
                         <div class="col-12 pb-3">
                             <span>Empleos más recientes</span>
                         </div>
-                        <% for (let i = 0; i < 15; i++) {%>
+                        <%if(empleos.length > 0){%>
+                        <% empleos.forEach((empleo) =>{%>
                         <div class="col-md-4">
-                            <a class="a-no-underline" href="">
+                            <a class="a-no-underline" href="/empleo/publicacion/<%=empleo["id"]%>">
                                 <div class="card mb-4 shadow-sm border-1">
                                     <div class="card-body">
-                                        <p class="card-text card-text-title m-0">Nombre empleo</p>
-                                        <p class="card-text m-0">Empresa</p>
-                                        <p class="card-text m-0">Ubicación</p>
+                                        <p class="card-text card-text-title m-0"><%=empleo["nombreEmpleo"]%></p>
+                                        <p class="card-text m-0"><%=empleo["nombreEmpresa"]%></p>
+                                        <p class="card-text m-0"><%=empleo["ubicacionEmpleo"]%></p>
                                         <hr class="hr-card-empleo">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <small class="text-muted">Fecha</small>
+                                            <small class="text-muted"><%=empleo["fechaPublicacion"]%></small>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </div>
+                        <%})%>
+                        <%}else{%>
+                        <div class="col-12">
+                            <div class="alert alert-info" role="alert">
+                                No hay empleos registrados
+                            </div>
+                        </div>
+
                         <%}%>
                     </div>
             </div>

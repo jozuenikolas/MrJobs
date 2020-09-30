@@ -1,6 +1,6 @@
 import {Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
-import {FindManyOptions, Repository} from "typeorm";
+import {FindManyOptions, Like, Repository} from "typeorm";
 import {EmpleoEntity} from "./empleo.entity";
 import {UsuarioEntity} from "../usuario/usuario.entity";
 
@@ -16,20 +16,84 @@ export class EmpleoService {
         return this.repositorio.save(nuevoEmpleo)
     }
 
-    obtenerEmpleosConEmpresa(){
-        const consulta : FindManyOptions<EmpleoEntity> = {
-            relations: [
-                "empresa"
-            ],
-            where:[
-                {
-                    estadoEmpleo: "e"
+    obtenerEmpleosConEmpresa(primerCriterio:string, segundoCriterio:string){
+        let consulta : FindManyOptions<EmpleoEntity> = {}
+
+        console.log("SERVICIO INICIO")
+
+        if(primerCriterio == undefined && segundoCriterio == undefined){
+            console.log("PRMER CRITERIO Y SEGUNDO CIRTERIO VACIOS")
+            consulta  = {
+                relations: [
+                    "empresa"
+                ],
+                where:[
+                    {
+                        estadoEmpleo: "e"
+                    }
+                ],
+                order:{
+                    fechaPublicacion: "DESC",
+                    nombreEmpleo: "ASC"
                 }
-            ],
-            order:{
-                fechaPublicacion: "DESC"
+            }
+        } else if(primerCriterio == undefined){
+            console.log("PRMER CRITERIO VACIO Y SEGUNDO CIRTERIO LLENO")
+            consulta  = {
+                relations: [
+                    "empresa"
+                ],
+                where:[
+                    {
+                        estadoEmpleo: "e",
+                        ubicacionEmpleo: Like(`%${segundoCriterio}%`)
+                    }
+                ],
+                order:{
+                    fechaPublicacion: "DESC",
+                    nombreEmpleo: "ASC"
+                }
+            }
+        } else if(segundoCriterio == undefined){
+            console.log("PRMER CRITERIO LLENO Y SEGUNDO CIRTERIO VACIO")
+            consulta  = {
+                relations: [
+                    "empresa"
+                ],
+                where:[
+                    {
+                        estadoEmpleo: "e",
+                        // nombreEmpleo: primerCriterio,
+                    }
+                ],
+                order:{
+                    fechaPublicacion: "DESC",
+                    nombreEmpleo: "ASC"
+                }
+            }
+        } else{
+            console.log("PRMER CRITERIO Y SEGUNDO CIRTERIO LLENOS")
+            consulta  = {
+                relations: [
+                    "empresa"
+                ],
+                where:[
+                    {
+                        estadoEmpleo: "e",
+                        ubicacionEmpleo: Like(`%${segundoCriterio}%`),
+                        // nombreEmpleo: primerCriterio,
+                    }
+                ],
+                order:{
+                    fechaPublicacion: "DESC",
+                    nombreEmpleo: "ASC"
+                }
             }
         }
+
+        console.log("SERVICIO INICIO")
+
+
         return this.repositorio.find(consulta)
     }
 

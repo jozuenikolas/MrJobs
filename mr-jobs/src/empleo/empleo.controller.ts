@@ -22,25 +22,35 @@ export class EmpleoController{
     async buscar(
         @Res() res,
         @Session() session,
+        @Query() parametrosConsulta,
     ){
         const estaLogueado = session.currentUser;
         if(estaLogueado) {
             const controlador = "empleo-buscar";
             const titulo = "Buscar empleo"
-
-            let empleos: Array<string> = []
-
-            const respuesta = await this._empleoService.obtenerEmpleosConEmpresa()
+            let primerCriterioBusqueda = parametrosConsulta.primerCriterioBusqueda
+            let segundoCriterioBusqueda = parametrosConsulta.segundoCriterioBusqueda
+            const respuesta = await this._empleoService.obtenerEmpleosConEmpresa(primerCriterioBusqueda, segundoCriterioBusqueda)
+            let empleos = []
             //console.log(respuesta)
-
             respuesta.forEach((objeto) =>{
-                console.log(objeto.id)
-                console.log(objeto.nombreEmpleo)
-                console.log(objeto.empresa["nombreEmpresa"])
-                console.log(objeto.ubicacionEmpleo)
-                console.log(objeto.fechaPublicacion)
-            })
+                let empleo = {}
+                empleo["id"] = objeto.id
+                empleo["nombreEmpleo"] = objeto.nombreEmpleo
+                empleo["nombreEmpresa"] = objeto.empresa["nombreEmpresa"]
+                empleo["ubicacionEmpleo"] = objeto.ubicacionEmpleo
+                empleo["fechaPublicacion"] = objeto.fechaPublicacion
 
+                if(primerCriterioBusqueda != undefined){
+                    if(primerCriterioBusqueda == empleo["nombreEmpleo"] || primerCriterioBusqueda == empleo["nombreEmpresa"]){
+                        empleos.push(empleo)
+                    }
+                }else{
+                    empleos.push(empleo)
+                }
+
+            })
+            // console.log(empleos)
 
             res.render(
                 'empleo/buscar',
@@ -49,10 +59,33 @@ export class EmpleoController{
                     controlador: controlador,
                     empleos: empleos,
                     currentUser: session.currentUser,
+                    primerCriterioBusqueda: primerCriterioBusqueda,
+                    segundoCriterioBusqueda: segundoCriterioBusqueda,
                 });
         }else{
             return res.redirect("/home/login")
         }
+    }
+
+    @Post("buscar")
+    async buscarPost(
+        @Body() parametrosCuerpo,
+        @Res() res,
+        @Session() session,
+    ){
+        let primerCriterioBusqueda = parametrosCuerpo.primerCriterioBusqueda
+        let segundoCriterioBusqueda = parametrosCuerpo.segundoCriterioBusqueda
+
+        if(primerCriterioBusqueda == "" && segundoCriterioBusqueda == ""){
+            return res.redirect(`/empleo/buscar`)
+        } else if(primerCriterioBusqueda == ""){
+            return res.redirect(`/empleo/buscar?segundoCriterioBusqueda=${segundoCriterioBusqueda}`)
+        } else if(segundoCriterioBusqueda == ""){
+            return res.redirect(`/empleo/buscar?primerCriterioBusqueda=${primerCriterioBusqueda}`)
+        } else{
+            return res.redirect(`/empleo/buscar?primerCriterioBusqueda=${primerCriterioBusqueda}&segundoCriterioBusqueda=${segundoCriterioBusqueda}`)
+        }
+
     }
 
     //http://localhost:3000/empleo/publicar
