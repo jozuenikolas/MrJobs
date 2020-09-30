@@ -2,7 +2,7 @@
 
     <% if(controlador == 'home' || controlador == 'signup' || controlador == 'login') {%>
         <a class="navbar-brand" href="/home">Mr Jobs</a>
-    <%} else if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empleo-publicar' || controlador == 'empresa-registrar'){%>
+    <%} else if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empleo-publicar' || controlador == 'empresa-registrar' || controlador == 'empleo-publicacion'){%>
     <a class="navbar-brand" href="/home/profile/<%=currentUser%>">Mr Jobs</a>
     <%}%>
 
@@ -21,22 +21,22 @@
                 </li>
             </ul>
         </div>
-    <%} else if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empleo-publicar' || controlador == 'empresa-registrar'){%>
+    <%} else if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empleo-publicar' || controlador == 'empresa-registrar' || controlador == 'empleo-publicacion'){%>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbars" aria-controls="navbars" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbars">
         <ul class="navbar-nav ml-auto ">
-            <%if(controlador == 'profile' || controlador == 'empleo-publicar' || controlador == 'empresa-registrar'){%>
+            <%if(controlador == 'profile' || controlador == 'empleo-publicar' || controlador == 'empresa-registrar' || controlador == 'empleo-publicacion'){%>
                 <li class="nav-item active ">
                     <a class="nav-link" href="/empleo/buscar"><button type="button" class="btn btn-primary border-1-navbar">Buscar empleo</button><span class="sr-only">(current)</span></a>
                 </li>
-            <%}if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empresa-registrar'){%>
+            <%}if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empresa-registrar' || controlador == 'empleo-publicacion'){%>
                 <li class="nav-item active">
                     <a class="nav-link" href="/empleo/publicar"><button type="button" class="btn btn-primary border-1-navbar">Publicar empleo</button><span class="sr-only">(current)</span></a>
                 </li>
-            <%}if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empleo-publicar'){%>
+            <%}if(controlador == 'profile' || controlador == 'empleo-buscar' || controlador == 'empleo-publicar' || controlador == 'empleo-publicacion'){%>
                 <li class="nav-item active">
                     <a class="nav-link" href="/empresa/registrar"><button type="button" class="btn btn-primary border-1-navbar">Registrar empresa</button><span class="sr-only">(current)</span></a>
                 </li>
