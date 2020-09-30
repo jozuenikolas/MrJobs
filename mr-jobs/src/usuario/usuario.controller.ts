@@ -269,7 +269,22 @@ export class UsuarioController{
         @Session() session,
     ){
         let passwordRecibida = parametrosCuerpo.password;
-        let passwordBase = await this._usuarioService.obtenerPasswordPorUsername(parametrosCuerpo.username)
+        let passwordBase;
+        try {
+            passwordBase = await this._usuarioService.obtenerPasswordPorUsername(parametrosCuerpo.username)
+        }catch (e) {
+            console.log(e);
+            const controlador = "login";
+            const titulo = "Iniciar sesión";
+            const mensajeError = 'Nombre de usuario o contraseña incorrectos'
+            res.render(
+                'usuario/login',
+                {
+                    titulo,
+                    controlador,
+                    error: mensajeError,
+                });
+        }
 
         if(passwordRecibida == passwordBase[0].password){
             session.currentUser = parametrosCuerpo.username;

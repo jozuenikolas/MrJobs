@@ -38,7 +38,7 @@ export class UsuarioService{
                 }
             ]
         }
-        return this.repositorio.find(consulta)
+        return this.repositorio.findOneOrFail(consulta)
     }
 
     obtenerEmpresasPorUsername(username:string){
