@@ -5,6 +5,7 @@ import {EmpleoEntity} from "./empleo.entity";
 import {EmpleoCreateDto} from "./dto/empleo.create-dto";
 import {validate, ValidationError} from "class-validator";
 import {UsuarioService} from "../usuario/usuario.service";
+import {isNumeric} from "rxjs/internal-compatibility";
 
 //http://localhost:3000/empleo
 @Controller("empleo")
@@ -187,16 +188,37 @@ export class EmpleoController{
     ){
         const estaLogueado = session.currentUser;
         if(estaLogueado) {
-            const controlador = "empleo-publicacion";
-            const titulo = "Publicacion empleo"
-            res.render(
-                'empleo/publicacion',
-                {
-                    titulo: titulo,
-                    controlador: controlador,
-                    currentUser: session.currentUser,
-                    idEmpleo: parametrosRuta.idEmpleo
-                });
+            const username = session.currentUser
+            const idEmpleo = parametrosRuta.idEmpleo
+            const respuestaUsuarioEmpresas = await this._usuarioService.obtenerUsuarioEmpresasEmpleosAplicacionesPorUsername(username)
+            const empresas = respuestaUsuarioEmpresas[0]["empresas"]
+            let idEmpleosDeUsuario = []
+            empresas.forEach((empresa) =>{
+                empresa.empleos.forEach((empleo) =>{
+                    idEmpleosDeUsuario.push(empleo.id)
+                })
+            })
+            // console.log(idEmpleosDeUsuario)
+            if(isNumeric(Number(idEmpleo))  &&  idEmpleosDeUsuario.includes(Number(idEmpleo))){
+                // console.log("ID EMPEO ES UN NUMERO Y ES EL EMPLEO DEL USUARIO")
+                const controlador = "empleo-publicacion";
+                const titulo = "Publicacion empleo"
+
+
+
+                res.render(
+                    'empleo/publicacion',
+                    {
+                        titulo: titulo,
+                        controlador: controlador,
+                        currentUser: username,
+                        idEmpleo: idEmpleo
+                    });
+            }else{
+                // console.log("ID EMPEO NO ES UN NUMERO O NO ES UN EMPLEO DEL USUARIO")
+                return res.redirect(`/home/profile/${username}`)
+            }
+
         }else{
             return res.redirect("/home/login")
         }

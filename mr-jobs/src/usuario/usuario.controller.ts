@@ -298,6 +298,16 @@ export class UsuarioController{
                          })
                      })
                     // console.log(empleos)
+                    empleos = empleos.sort((obj1, obj2) => {
+                        if (obj2.numAplicaciones > obj1.numAplicaciones) {
+                            return 1;
+                        }
+                        if (obj2.numAplicaciones < obj1.numAplicaciones) {
+                            return -1;
+                        }
+                        return 0;
+                    });
+                    // console.log(empleos)
                     res.render(
                         'usuario/profile',
                         {
