@@ -352,6 +352,86 @@ export class UsuarioController{
 
 
     }
+    @Post('/profile/agregarTrabajo')
+    agregarTrabajo(
+        @Session() session,
+        @Res() res,
+    ){
+        const titulo = "Agregar trabajo";
+        const controlador = "signup";
+        res.render(
+            'usuario/agregarTrabajo',
+            {
+                titulo: titulo,
+                controlador: controlador,
+            });
+    }
+
+    @Post('agregarTrabajoDesdeVista')
+    async agregarTrabajoDesdeVista(
+        @Res() res,
+        @Body() parametrosCuerpo,
+        @Session() session,
+    ){
+        const trabajoNuevo = new TrabajoCreateDto()
+        trabajoNuevo.nombreTrabajo = parametrosCuerpo.cargo;
+        trabajoNuevo.organizacion = parametrosCuerpo.empresa;
+        trabajoNuevo.tipo = parametrosCuerpo.tipoEmpleo;
+        trabajoNuevo.ubicacion = parametrosCuerpo.ubicacion;
+
+        const detalleTrabajo = new DetalleTrabajoCreateDto();
+        detalleTrabajo.anioFin = parametrosCuerpo.fechaFin;
+        detalleTrabajo.anioInicio = parametrosCuerpo.fechaFin;
+        const errores: ValidationError[] = await validate(trabajoNuevo)
+
+        if (errores.length > 0) {
+            console.log(errores)
+            const mensajeError = 'No se pudo guardar la información de empleo, ingrese la información correcta'
+            const titulo = "Agregar trabajo";
+            const controlador = "signup";
+            res.render(
+                'usuario/agregarTrabajo',
+                {
+                    titulo: titulo,
+                    controlador: controlador,
+                    error: mensajeError,
+                });
+        }else{
+            console.log("exito");
+
+            let respuestaBusquedaUsuario = await this._usuarioService.obtenerUsuarioPorUsername(session.currentUser);
+            console.log(respuestaBusquedaUsuario)
+            let trabajoGrabar = new  TrabajoEntity()
+            trabajoGrabar = trabajoDTOtoEntity(trabajoNuevo,trabajoGrabar)
+            let respuestaCreacionTrabajo;
+            try {
+                respuestaCreacionTrabajo = await this._trabajoService.crearUno(trabajoGrabar)
+                console.log("trabajo creado")
+            } catch (e) {
+                console.log(e)
+                throw  new InternalServerErrorException("Error creando el empleo")
+            }
+            if (respuestaCreacionTrabajo) {
+                let detalleTrabajoGrabar = new DetalleTrabajoEntity()
+                detalleTrabajoGrabar.trabajo=respuestaCreacionTrabajo.id;
+                detalleTrabajoGrabar.usuario=respuestaBusquedaUsuario;
+                detalleTrabajoGrabar.anioInicio = detalleTrabajo.anioInicio;
+                detalleTrabajoGrabar.anioFin = detalleTrabajo.anioFin;
+
+                let respuestaCreacionDetalleTrabajo;
+                try {
+                    respuestaCreacionDetalleTrabajo = await this._detalleTrabajoService.crearUno(detalleTrabajoGrabar)
+                    console.log("DetalleCreado");
+                    return res.redirect(`/home/profile/${session.currentUser}`)
+                } catch (e) {
+                    console.error(e);
+                    throw  new InternalServerErrorException({
+                        mensaje: 'Error creando Empleo(fechas)'
+                    })
+                }
+            }
+        }
+    }
 
     @Get('logout')
     logout(
