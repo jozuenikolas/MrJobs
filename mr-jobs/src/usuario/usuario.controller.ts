@@ -260,12 +260,17 @@ export class UsuarioController{
                 let detalleTrabajo= new DetalleTrabajoEntity();
                 consultaUsuarioDetalleTrabajo.forEach((value)=>{
                     detalleTrabajo= value.detallesTrabajo;
-                    detallesIDs.push(detalleTrabajo[0].id);
                 });
+                for (let i = 0; i < detalleTrabajo['length']; i++) {
+                    detallesIDs.push(detalleTrabajo[i].id);
+                }
+
                 let consultaTrabajo;
                 let trabajos = [];
+                //console.log(detallesIDs)
                 for (let i = 0; i < detallesIDs.length; i++) {
                     consultaTrabajo = await this._detalleTrabajoService.obtenerTrabajoPorDetalleTrabajoID(detallesIDs[i]);
+                    //console.log(consultaTrabajo[0])
                     trabajos.push(consultaTrabajo[0]);
                 }
                 //let consultaTrabajo = await this._detalleTrabajoService.obtenerTrabajoPorDetalleTrabajoID(detalleTrabajo[0].id);
@@ -397,10 +402,8 @@ export class UsuarioController{
                     error: mensajeError,
                 });
         }else{
-            console.log("exito");
 
             let respuestaBusquedaUsuario = await this._usuarioService.obtenerUsuarioPorUsername(session.currentUser);
-            console.log(respuestaBusquedaUsuario)
             let trabajoGrabar = new  TrabajoEntity()
             trabajoGrabar = trabajoDTOtoEntity(trabajoNuevo,trabajoGrabar)
             let respuestaCreacionTrabajo;
