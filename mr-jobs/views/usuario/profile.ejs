@@ -5,6 +5,7 @@
 <h1 hidden>CurrentProfile: <%=currentProfile%></h1>
 <h1 hidden>profile</h1>
 <div class="container">
+
     <div class="container profileBackground">
         <br>
         <div class="row align-items-center flex-row-reverse">
@@ -42,34 +43,71 @@
         </div>
         <br>
     </div>
-    <div class="container profileBackground">
+
+    <div class="container profileBackground ">
         <div class="list-group">
             <br>
-            <p class="tituloHome">Experiencia</p>
+            <p class="card-text-title tituloHome">Experiencia</p>
             <%console.log(trabajo)%>
             <%trabajo.forEach((value) =>{%>
-                <a class="list-group-item list-group-item-action flex-column align-items-start ">
+                <a class="list-group-item list-group-item-action flex-column align-items-start border-1">
                     <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1">Trabajo como <%=value.trabajo.nombre%></h5>
+                        <h5 class="color-font-profile mb-1">Trabajo como <%=value.trabajo.nombre%></h5>
                         <small>
                             <form method="POST" action="agregarTrabajo">
                                 <button class="btn-dark btn-info">Agregar</button>
                             </form>
                         </small>
                     </div>
-                    <p class="mb-1"> en <%=value.trabajo.organizacion%> - <%=value.trabajo.tipo%></p>
-                    <p class="mb-1"> desde: <%=value.anioInicio%> hasta: <%=value.anioFin%></p>
+                    <p class="color-font-profile mb-1"> en <%=value.trabajo.organizacion%> - <%=value.trabajo.tipo%></p>
+                    <p class="color-font-profile mb-1"> desde: <%=value.anioInicio%> hasta: <%=value.anioFin%></p>
                     <small>Lugar: <%=value.trabajo.ubicacion%></small>
                 </a>
             <%})%>
             <br>
         </div>
     </div>
+
+
+
+    <div class="container profileBackground ">
+        <div class="list-group">
+            <br>
+            <p class="card-text-title tituloHome">Empleos publicados</p>
+
+<!--            SI TIENE EMPLEOS PUBLICADOS -->
+            <a class="list-group-item list-group-item-action flex-column align-items-start border-1">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="color-font-profile mb-1">Nombre empleo</h5>
+                    <small>
+                        <form method="POST" action="agregarTrabajo">
+                            <button class="btn-primary">Agregar</button>
+                        </form>
+                    </small>
+                </div>
+                <p class="color-font-profile mb-1"> Nombre empresa</p>
+                <p class="color-font-profile mb-1"> Ubicacion</p>
+                <p class="color-font-profile mb-1"> Número de solicitudes</p>
+                <hr class="hr-card-empleo">
+                <small class="text-muted">Fecha publicacion</small>
+            </a>
+            <br>
+
+<!--            SI NO TIENE EMPLEOS PUBLICADOS-->
+            <div class="alert alert-info" role="alert">
+                No tiene empleos publicados
+            </div>
+
+
+        </div>
+    </div>
+
+
     <br>
-    <a href="/home/logout">
-        <button class="btn-primary btn-dark">Cerrar sesión</button>
-    </a>
 </div>
+
+
+
 
 
 <%- include('../compartido/footer/footer-component')%>

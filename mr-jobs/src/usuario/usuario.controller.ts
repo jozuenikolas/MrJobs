@@ -275,6 +275,11 @@ export class UsuarioController{
                 }
                 //let consultaTrabajo = await this._detalleTrabajoService.obtenerTrabajoPorDetalleTrabajoID(detalleTrabajo[0].id);
 
+
+
+
+
+
                 if(trabajos){
                     console.log(trabajos)
                     res.render(
