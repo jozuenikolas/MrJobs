@@ -255,7 +255,7 @@ export class UsuarioController{
 
                 let consultaUsuarioDetalleTrabajo;
                 consultaUsuarioDetalleTrabajo = await this._usuarioService.obtenerDetalleTrabajoPorUserName(parametrosRuta.username);
-                console.log(consultaUsuarioDetalleTrabajo)
+                // console.log(consultaUsuarioDetalleTrabajo)
                 let detallesIDs = [];
                 let detalleTrabajo= new DetalleTrabajoEntity();
                 consultaUsuarioDetalleTrabajo.forEach((value)=>{
@@ -275,23 +275,41 @@ export class UsuarioController{
                 }
                 //let consultaTrabajo = await this._detalleTrabajoService.obtenerTrabajoPorDetalleTrabajoID(detalleTrabajo[0].id);
 
-
-
-
-
-
                 if(trabajos){
-                    console.log(trabajos)
+                    const currentProfile = parametrosRuta.username
+                    const currentUser = session.currentUser
+                    let empleos = []
+                    const respuestaUsuarioEmpresasEmpleosAplicaciones = await this._usuarioService.obtenerUsuarioEmpresasEmpleosAplicacionesPorUsername(currentProfile)
+                    const empresasEmpleosAplicaciones = respuestaUsuarioEmpresasEmpleosAplicaciones[0]["empresas"]
+
+                    // console.log(empresasEmpleosAplicaciones)
+
+                    empresasEmpleosAplicaciones.forEach((empresa) =>{
+                        let nombreEmpresa = empresa.nombreEmpresa
+                         empresa.empleos.forEach((empleo) =>{
+                             let empleoAgregar = {}
+                             empleoAgregar["idEmpleo"] = empleo.id
+                             empleoAgregar["nombreEmpleo"] = empleo.nombreEmpleo
+                             empleoAgregar["nombreEmpresa"] = nombreEmpresa
+                             empleoAgregar["ubicacionEmpleo"] = empleo.ubicacionEmpleo
+                             empleoAgregar["numAplicaciones"] = empleo.aplicaciones.length
+                             empleoAgregar["fechaPublicacion"] = empleo.fechaPublicacion
+                             empleos.push(empleoAgregar)
+                         })
+                     })
+                    // console.log(empleos)
                     res.render(
                         'usuario/profile',
                         {
                             titulo: titulo,
                             controlador: controlador,
-                            currentUser: session.currentUser,
-                            currentProfile: parametrosRuta.username,
+                            currentUser: currentUser,
+                            currentProfile: currentProfile,
                             usuario: usuario,
-                            trabajo: trabajos
+                            trabajo: trabajos,
+                            empleos: empleos
                         });
+
                 }else{
                     throw new  InternalServerErrorException("error cargando el perfil");
                 }
@@ -359,9 +377,8 @@ export class UsuarioController{
             return ;
         }
 
-
-
     }
+
     @Post('/profile/agregarTrabajo')
     agregarTrabajo(
         @Session() session,

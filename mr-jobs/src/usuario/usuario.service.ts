@@ -101,4 +101,16 @@ export class UsuarioService{
         return this.repositorio.find(consulta)
     }
 
+    obtenerUsuarioEmpresasEmpleosAplicacionesPorUsername(username:string){
+        const consulta : FindManyOptions<UsuarioEntity> = {
+            relations: [ "empresas", "empresas.empleos", "empresas.empleos.aplicaciones"],
+            where: [
+                {
+                    username: username
+                }
+            ]
+        }
+        return this.repositorio.find(consulta)
+    }
+
 }
