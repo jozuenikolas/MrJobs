@@ -135,4 +135,17 @@ export class EmpleoService {
         return this.repositorio.find(consulta)
     }
 
+    obtenerEmpleoEmpresaAplicacionesUsuarioPorIdEmpleo(idEmpleo:string){
+    const consulta : FindManyOptions<EmpleoEntity> = {
+        relations: ["empresa","aplicaciones","aplicaciones.usuario"],
+        where:[
+            {
+                id: idEmpleo,
+            }
+        ]
+    }
+    return this.repositorio.find(consulta)
+}
+
+
 }

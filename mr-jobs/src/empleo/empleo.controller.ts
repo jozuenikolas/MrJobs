@@ -204,15 +204,44 @@ export class EmpleoController{
                 const controlador = "empleo-publicacion";
                 const titulo = "Publicacion empleo"
 
+                const respuestaEmpleoEmpresaAplicacionesUsuario = await this._empleoService.obtenerEmpleoEmpresaAplicacionesUsuarioPorIdEmpleo(idEmpleo)
 
+                // console.log(respuestaEmpleoEmpresaAplicacionesUsuario)
+                let empleo = {}
+                empleo["nombreEmpleo"] = respuestaEmpleoEmpresaAplicacionesUsuario[0]["nombreEmpleo"]
+                empleo["nombreEmpresa"] = respuestaEmpleoEmpresaAplicacionesUsuario[0]["empresa"]["nombreEmpresa"]
+                empleo["tipoEmpleo"] = respuestaEmpleoEmpresaAplicacionesUsuario[0]["tipoEmpleo"]
+                empleo["funcionLaboral"] = respuestaEmpleoEmpresaAplicacionesUsuario[0]["funcionLaboral"]
+                empleo["nivelAntiguedad"] = respuestaEmpleoEmpresaAplicacionesUsuario[0]["nivelAntiguedad"]
+                empleo["ubicacionEmpleo"] = respuestaEmpleoEmpresaAplicacionesUsuario[0]["ubicacionEmpleo"]
+                empleo["nombreEmpleo"] = respuestaEmpleoEmpresaAplicacionesUsuario[0]["nombreEmpleo"]
+                empleo["fechaPublicacion"] = respuestaEmpleoEmpresaAplicacionesUsuario[0]["fechaPublicacion"]
+                // console.log(empleo)
 
+                let aplicaciones = []
+                respuestaEmpleoEmpresaAplicacionesUsuario[0]["aplicaciones"].forEach((aplicacion) =>{
+                    let aplicacionAgregar = {}
+                    aplicacionAgregar["username"] = aplicacion.usuario.username
+                    aplicacionAgregar["nombre"] = aplicacion.usuario.nombre
+                    aplicacionAgregar["apellido"] = aplicacion.usuario.apellido
+                    aplicacionAgregar["correo"] = aplicacion.usuario.correo
+                    aplicacionAgregar["ciudad"] = aplicacion.usuario.ciudad
+                    aplicacionAgregar["pais"] = aplicacion.usuario.pais
+                    aplicacionAgregar["aspiracionSalarial"] = aplicacion.aspiracionSalarial
+                    aplicacionAgregar["razon"] = aplicacion.razon
+                    aplicaciones.push(aplicacionAgregar)
+                    // console.log(aplicacion)
+                })
+                // console.log(aplicaciones)
                 res.render(
                     'empleo/publicacion',
                     {
                         titulo: titulo,
                         controlador: controlador,
                         currentUser: username,
-                        idEmpleo: idEmpleo
+                        idEmpleo: idEmpleo,
+                        empleo: empleo,
+                        aplicaciones: aplicaciones
                     });
             }else{
                 // console.log("ID EMPEO NO ES UN NUMERO O NO ES UN EMPLEO DEL USUARIO")

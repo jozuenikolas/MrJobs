@@ -14,28 +14,28 @@
                     <div class="col-md-6">
                         <div class="card-body mx-3">
                             <p class="card-publicacion-titulo m-0">Cargo</p>
-                            <p class="card-publicacion-subtitulo m-0">nombreEmpleo</p>
+                            <p class="card-publicacion-subtitulo m-0"><%=empleo["nombreEmpleo"]%></p>
                             <p class="card-publicacion-titulo m-0 mt-3">Tipo de empleo</p>
-                            <p class="card-publicacion-subtitulo m-0">tipoEmpleo</p>
+                            <p class="card-publicacion-subtitulo m-0"><%=empleo["tipoEmpleo"]%></p>
                             <p class="card-publicacion-titulo m-0 mt-3">Nivel de experiencia</p>
-                            <p class="card-publicacion-subtitulo m-0">nivelAntiguedad</p>
+                            <p class="card-publicacion-subtitulo m-0"><%=empleo["nivelAntiguedad"]%></p>
 
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card-body mx-3">
                             <p class="card-publicacion-titulo m-0">Nombre de empresa</p>
-                            <p class="card-publicacion-subtitulo m-0">nombreEmpresa</p>
+                            <p class="card-publicacion-subtitulo m-0"><%=empleo["nombreEmpresa"]%></p>
                             <p class="card-publicacion-titulo m-0 mt-3">Función laboral</p>
-                            <p class="card-publicacion-subtitulo m-0">funcionLaboral</p>
+                            <p class="card-publicacion-subtitulo m-0"><%=empleo["funcionLaboral"]%></p>
                             <p class="card-publicacion-titulo m-0 mt-3">Ubicación</p>
-                            <p class="card-publicacion-subtitulo m-0">ubicacionEmpleo</p>
+                            <p class="card-publicacion-subtitulo m-0"><%=empleo["ubicacionEmpleo"]%></p>
                         </div>
                     </div>
                     <hr class="hr-card-publicacion">
                     <div class="col-md-6 mb-4 mt-0">
                         <div class="card-body mx-3 pt-0">
-                            <small>fechaPublicación</small>
+                            <small><%=empleo["fechaPublicacion"]%></small>
                         </div>
                     </div>
                 </div>
@@ -52,57 +52,65 @@
         <div class="list-group mt-4 mb-4">
             <p class="card-text-title tituloHome">Aplicaciones</p>
 
+            <%if(aplicaciones.length>0){%>
+
+                <%for (let i = 0; i < aplicaciones.length; i++) {%>
 <!--            EL PRIMERO NO TIENE BORDER-TOP-0, EL RESTO SI-->
-            <div class="card-publicacion border-1 bg-white">
-                <div class="row no-gutters">
-                    <div class="col-md-4">
-                        <div class="card-body mx-3">
-                            <p class="card-publicacion-titulo-aplicacion m-0">Nombre</p>
-                            <p class="card-publicacion-subtitulo-aplicacion m-0">nombre</p>
-                            <p class="card-publicacion-titulo-aplicacion m-0 mt-3">Ciudad</p>
-                            <p class="card-publicacion-subtitulo-aplicacion m-0">ciudad</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card-body mx-3">
-                            <p class="card-publicacion-titulo-aplicacion m-0">Apellido</p>
-                            <p class="card-publicacion-subtitulo-aplicacion m-0">apellido</p>
-                            <p class="card-publicacion-titulo-aplicacion m-0 mt-3">País</p>
-                            <p class="card-publicacion-subtitulo-aplicacion m-0">pais</p>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card-body mx-3">
-                            <p class="card-publicacion-titulo-aplicacion m-0">Correo</p>
-                            <p class="card-publicacion-subtitulo-aplicacion m-0">correo</p>
-                            <p class="card-publicacion-titulo-aplicacion m-0 mt-3">Aspiración salarial</p>
-                            <p class="card-publicacion-subtitulo-aplicacion m-0">aspiracionSalarial</p>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="card-body mx-3">
-                            <p class="card-publicacion-titulo-aplicacion m-0">¿Por qué quiere este empleo?</p>
-                            <p class="card-publicacion-subtitulo-aplicacion m-0">razon</p>
-                        </div>
-                    </div>
-                    <hr class="hr-card-publicacion">
-                    <div class="col-md-12 mb-4 mt-0 text-right">
-                        <div class="card-body mx-3 pt-0 pb-0">
-                            <a href="">
-                                <button class="btn-info btn btn-size-profile">Ver perfil</button>
-                            </a>
+                    <%if(i == 0){%>
+                        <div class="card-publicacion border-1 bg-white">
+                    <%}else{%>
+                        <div class="card-publicacion border-1 border-top-0 bg-white">
+                    <%}%>
+                        <div class="row no-gutters">
+                            <div class="col-md-4">
+                                <div class="card-body mx-3">
+                                    <p class="card-publicacion-titulo-aplicacion m-0">Nombre</p>
+                                    <p class="card-publicacion-subtitulo-aplicacion m-0"><%=aplicaciones[i]["nombre"]%></p>
+                                    <p class="card-publicacion-titulo-aplicacion m-0 mt-3">Ciudad</p>
+                                    <p class="card-publicacion-subtitulo-aplicacion m-0"><%=aplicaciones[i]["ciudad"]%></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-body mx-3">
+                                    <p class="card-publicacion-titulo-aplicacion m-0">Apellido</p>
+                                    <p class="card-publicacion-subtitulo-aplicacion m-0"><%=aplicaciones[i]["apellido"]%></p>
+                                    <p class="card-publicacion-titulo-aplicacion m-0 mt-3">País</p>
+                                    <p class="card-publicacion-subtitulo-aplicacion m-0"><%=aplicaciones[i]["pais"]%></p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-body mx-3">
+                                    <p class="card-publicacion-titulo-aplicacion m-0">Correo</p>
+                                    <p class="card-publicacion-subtitulo-aplicacion m-0"><%=aplicaciones[i]["correo"]%></p>
+                                    <p class="card-publicacion-titulo-aplicacion m-0 mt-3">Aspiración salarial</p>
+                                    <p class="card-publicacion-subtitulo-aplicacion m-0">$ <%=aplicaciones[i]["aspiracionSalarial"]%></p>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="card-body mx-3">
+                                    <p class="card-publicacion-titulo-aplicacion m-0">¿Por qué quiere este empleo?</p>
+                                    <p class="card-publicacion-subtitulo-aplicacion m-0"><%=aplicaciones[i]["razon"]%></p>
+                                </div>
+                            </div>
+                            <hr class="hr-card-publicacion">
+                            <div class="col-md-12 mb-4 mt-0 text-right">
+                                <div class="card-body mx-3 pt-0 pb-0">
+                                    <a href="/home/profile/<%=aplicaciones[i]["username"]%>">
+                                        <button class="btn-info btn btn-size-profile">Ver perfil</button>
+                                    </a>
 
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-
+                <%}%>
+            <%}else{%>
 <!--            SI NO HAY APLICACIONES-->
 
-            <div class="alert alert-info" role="alert">
-                No registras aplicaciones
-            </div>
-
+                <div class="alert alert-info" role="alert">
+                    No hay aplicaciones registradas
+                </div>
+            <%}%>
         </div>
     </div>
 
