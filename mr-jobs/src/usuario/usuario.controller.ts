@@ -255,20 +255,23 @@ export class UsuarioController{
 
                 let consultaUsuarioDetalleTrabajo;
                 consultaUsuarioDetalleTrabajo = await this._usuarioService.obtenerDetalleTrabajoPorUserName(parametrosRuta.username);
+                console.log(consultaUsuarioDetalleTrabajo)
+                let detallesIDs = [];
                 let detalleTrabajo= new DetalleTrabajoEntity();
-                let values;
-                for(values in consultaUsuarioDetalleTrabajo){
-                    detalleTrabajo= values.detallesTrabajo;
+                consultaUsuarioDetalleTrabajo.forEach((value)=>{
+                    detalleTrabajo= value.detallesTrabajo;
+                    detallesIDs.push(detalleTrabajo[0].id);
+                });
+                let consultaTrabajo;
+                let trabajos = [];
+                for (let i = 0; i < detallesIDs.length; i++) {
+                    consultaTrabajo = await this._detalleTrabajoService.obtenerTrabajoPorDetalleTrabajoID(detallesIDs[i]);
+                    trabajos.push(consultaTrabajo[0]);
                 }
-                detalleTrabajo= consultaUsuarioDetalleTrabajo[0].detallesTrabajo;
-                console.log(detalleTrabajo);
-                console.log(detalleTrabajo[0].id);
+                //let consultaTrabajo = await this._detalleTrabajoService.obtenerTrabajoPorDetalleTrabajoID(detalleTrabajo[0].id);
 
-                let consultaTrabajo = await this._detalleTrabajoService.obtenerTrabajoPorDetalleTrabajoID(detalleTrabajo[0].id);
-
-                if(consultaTrabajo){
-                    let trabajoInformacion = consultaTrabajo[0]
-                    console.log(trabajoInformacion)
+                if(trabajos){
+                    console.log(trabajos)
                     res.render(
                         'usuario/profile',
                         {
@@ -277,7 +280,7 @@ export class UsuarioController{
                             currentUser: session.currentUser,
                             currentProfile: parametrosRuta.username,
                             usuario: usuario,
-                            trabajo: consultaTrabajo
+                            trabajo: trabajos
                         });
                 }else{
                     throw new  InternalServerErrorException("error cargando el perfil");
