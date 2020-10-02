@@ -7,7 +7,6 @@
 
 <div class="container">
     <div class="container">
-        <h1><%= existeTrabajo ? 'Editar': 'Agregar'%> empleo</h1>
         <%if(!existeTrabajo){%>
         <%existeNombre = true%>
         <%existeApellido = true%>
@@ -20,48 +19,63 @@
                 Error: <%= error%>
             </div>
         <%}%>
-        <form action="/home/agregarTrabajoDesdeVista"
-              method="POST">
-            <div class="form-group">
-                <label for="empresaID">Empresa</label>
-                <input id="empresaID" type="text" name="empresa"
-                       class="form-control" placeholder="Empresa mas reciente">
-            </div>
-            <div class="form-group">
-                <label for="cargoID">Cargo mas reciente</label>
-                <input id="cargoID" type="text"
-                       name="cargo" class="form-control"
-                       placeholder="Cargo mas reciente">
-            </div>
-            <div class="form-group">
-                <label for="tipoEmpleoID">Tipo de empleo</label>
-                <select class="form-control" id="tipoEmpleoID" name="tipoEmpleo">
-                    <option>Tipo de empleo</option>
-                    <option value="jornadaCompleta">Jornada completa</option>
-                    <option value="jornadaParcial">Jornada parcial</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="ubicacionID">Ubicacion</label>
-                <textarea class="form-control" id="ubicacionID" rows="3"
-                          name = "ubicacion" placeholder="Ubicacion del trabajo"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="fechaInicioID">Fecha de inicio</label>
-                <input id="fechaInicioID" type="date"
-                       name="fechaInicio" class="form-control"
-                       placeholder="Fecha de inicio del trabajo">
-            </div>
-            <div class="form-group">
-                <label for="fechaFinID">Fecha de fin (fecha actual en caso de seguir trabajando)</label>
-                <input id="fechaFinID" type="date"
-                       name="fechaFin" class="form-control"
-                       placeholder="Fecha de fin del trabajo">
-            </div>
+        <br>
+        <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6 ">
+            <div class="card border-top-0 b border-left-0 border-right-0 radius-card-head">
+                <div class="card-header rounded-top card-title-color text-center radius-card-body">
+                    <h4><strong>Empleo</strong></h4>
+                </div>
+                <div class="card-body px-5 py-4">
+                    <form action="/home/agregarTrabajoDesdeVista"
+                          method="POST">
+                        <div class="form-group">
+                            <label for="empresaID">Empresa</label>
+                            <input id="empresaID" type="text" name="empresa"
+                                   class="form-control" placeholder="Empresa mas reciente">
+                        </div>
+                        <div class="form-group">
+                            <label for="cargoID">Cargo mas reciente</label>
+                            <input id="cargoID" type="text"
+                                   name="cargo" class="form-control"
+                                   placeholder="Cargo mas reciente">
+                        </div>
+                        <div class="form-group">
+                            <label for="tipoEmpleoID">Tipo de empleo</label>
+                            <select class="form-control" id="tipoEmpleoID" name="tipoEmpleo">
+                                <option>Tipo de empleo</option>
+                                <option value="jornadaCompleta">Jornada completa</option>
+                                <option value="jornadaParcial">Jornada parcial</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ubicacionID">Ubicacion</label>
+                            <textarea class="form-control" id="ubicacionID" rows="3"
+                                      name = "ubicacion" placeholder="Ubicacion del trabajo"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaInicioID">Fecha de inicio</label>
+                            <input id="fechaInicioID" type="date"
+                                   name="fechaInicio" class="form-control"
+                                   placeholder="Fecha de inicio del trabajo">
+                        </div>
+                        <div class="form-group">
+                            <label for="fechaFinID">Fecha de fin (fecha actual en caso de seguir trabajando)</label>
+                            <input id="fechaFinID" type="date"
+                                   name="fechaFin" class="form-control"
+                                   placeholder="Fecha de fin del trabajo">
+                        </div>
 
-            <button type="submit" class="btn btn-primary">Registrarse</button>
-            <button type="reset" class="btn btn-primary">limpiar</button>
-        </form>
+                        <button type="submit" class="btn btn-primary">Registrarse</button>
+                        <button type="reset" class="btn btn-primary">limpiar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+</div>
     </div>
 </div>
 
